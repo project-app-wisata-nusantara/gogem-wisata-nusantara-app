@@ -1,18 +1,18 @@
 # GoGem
 ![download]()
-## Capstone Project Product Track Bangkit Batch 2 2024
+## Capstone Project BEKUP CREATE 2025
 
-Bangkit Capstone Team ID : : C242-PS227	<br>
-Here is our repository for Bangkit 2024 Capstone project. Our team consist of 3 Machine Learning, 2 Mobile Development, and 2 Cloud Computing.
+Bangkit Capstone Group ID : : B25-PG005	<br>
+Here is our repository for BEKUP CREATE Capstone project. Our team consist of 4 Multi-platform Flutter Dev.
 
 ## Our Warriors
 
-|              Name              | Cohort-ID |                                                       Contact Link                                                       |
+|              Name              | Cohort-ID          |                                                       Contact Link                                                       |
 | :----------------------------: | :----------------: | :----------------------------------------------------------------------------------------------------------------------: |
-|  | m704b4ky2323 |            [LinkedIn]() or [GitHub]()             |
-|  | m296b4kx3211  |                [LinkedIn]() or [GitHub]()                |
-|  | m210b4ky0938  |                [LinkedIn]() or [GitHub]()                |
-| | a272b4ky0215  |              [LinkedIn]() or [GitHub]()               |
+|  Setyadi Darmawan              | BC25B078           |            [LinkedIn]() or [GitHub]()             |
+|  Revina Chitra Sagita          | BC25B082           |                [LinkedIn]() or [GitHub]()                |
+|  M Mahfudl Awaludin            | BC25B093           |                [LinkedIn]() or [GitHub]()                |
+|  Nur Afdlol Musyafa            | BC25B094           |              [LinkedIn]() or [GitHub]()               |
 
 
 ## Our Advisor 
@@ -62,3 +62,4 @@ Tourism Place : [link]() <br>
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
