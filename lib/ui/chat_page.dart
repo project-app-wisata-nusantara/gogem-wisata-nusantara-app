@@ -33,14 +33,12 @@ class _ChatBody extends StatelessWidget {
       spacing: 4,
       children: [
         Expanded(
-          // todo-04-ui-01: consume the controller
           child: Consumer<GeminiController>(
             builder: (_, gemini, _) {
               return ListViewChats(chats: gemini.historyChats);
             },
           ),
         ),
-        // todo-04-ui-02: give the loading indicator
         Consumer<GeminiController>(
           builder: (_, gemini, _) {
             final isLoading = gemini.isLoading;
@@ -62,7 +60,6 @@ class _ChatBody extends StatelessWidget {
               }
             },
             sendOnPressed: (message) {
-              // todo-04-ui-03: send the message
               context.read<GeminiController>().sendMessage(message);
             },
           ),
