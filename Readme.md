@@ -2,7 +2,7 @@
 ![download]()
 ## Capstone Project BEKUP CREATE 2025
 
-Bangkit Capstone Group ID : : B25-PG005	<br>
+BEKUP CREATE Capstone Group ID : : B25-PG005	<br>
 Here is our repository for BEKUP CREATE Capstone project. Our team consist of 4 Multi-platform Flutter Dev.
 
 ## Our Warriors
@@ -16,9 +16,9 @@ Here is our repository for BEKUP CREATE Capstone project. Our team consist of 4 
 
 
 ## Our Advisor 
-|              Advisor Name              | Advisor -ID |   Expertise    |                                                       Contact Link                                                       |
-| :----------------------------: | :--------: | :----------------: | :----------------------------------------------------------------------------------------------------------------------: |
-| |  |   |            [Email]()             |
+|              Advisor Name              | Advisor - ID |   Expertise    |                                                       Contact Link                                       |
+| :------------------------------------: | :----------: | :----------------: | :--------------------------------------------------------------------------------------------------------- -: |
+| Muhammad Abdu Ar Rahman                |  DCD25-DB35  |   |            [Email]()             |
 
 ## About this project
 
@@ -27,7 +27,7 @@ Here is our repository for BEKUP CREATE Capstone project. Our team consist of 4 
 ## Documentation
 Project PLAN : [Link]() <br>
 Project Brief : [Link]() <br>
-Youtube Video Presentation : [PARADISATA]()
+Youtube Video Presentation : [Link]()
 
 ## System Architecture
 
@@ -62,4 +62,5 @@ Tourism Place : [link]() <br>
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
 
