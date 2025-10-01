@@ -1,0 +1,31 @@
+name: go_gem_App
+description: "A new Flutter project."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  provider: ^6.1.2
+  image_picker: ^1.1.2
+  flutter_markdown: ^0.7.6+2
+  google_generative_ai: ^0.4.6
+  build_runner: ^2.4.15
+  mime: ^2.0.0
+  envied: ^1.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  envied_generator: ^1.1.1
+
+flutter:
+  uses-material-design: true
