@@ -16,8 +16,8 @@ Here is our repository for BEKUP CREATE Capstone project. Our team consist of 4 
 
 
 ## Our Advisor 
-|              Advisor Name              | Advisor - ID |   Expertise    |                                                       Contact Link                                       |
-| :------------------------------------: | :----------: | :----------------: | :--------------------------------------------------------------------------------------------------------- -: |
+|              Advisor Name              | Advisor - ID |   Expertise        |                                                       Contact Link                                   |
+| :------------------------------------: | :----------: | :----------------: | :--------------------------------------------------------------------------------------------------: |
 | Muhammad Abdu Ar Rahman                |  DCD25-DB35  |   |            [Email]()             |
 
 ## About this project
@@ -62,5 +62,6 @@ Tourism Place : [link]() <br>
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
 
 
