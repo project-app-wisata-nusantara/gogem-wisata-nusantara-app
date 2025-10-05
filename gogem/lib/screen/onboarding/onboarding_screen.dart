@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../home/home_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -13,19 +14,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> _pages = [
     {
-      "image": "assets/onboarding-1.jpg",
+      "image": "assets/images/onboarding-1.jpg",
       "title": "Welcome & Intro",
       "desc": "Selamat datang di GoGem!\nTemukan cara baru menjelajah Indonesia dengan Smart Virtual Tour Guide yang interaktif dan personal.",
       "button": "Let's Go",
     },
     {
-      "image": "assets/onboarding-2.jpg",
+      "image": "assets/images/onboarding-2.jpg",
       "title": "Hidden Gems & Local Wonders",
       "desc": "Jangan hanya ke destinasi populer.\nGoGem membawamu menemukan hidden gems, kuliner autentik, hingga produk lokal yang jarang terungkap wisatawan.",
       "button": "Continue",
     },
     {
-      "image": "assets/onboarding-1.jpg",
+      "image": "assets/images/onboarding-1.jpg",
       "title": "Smart Virtual AI Tour Guide",
       "desc": "Jelajahi destinasi dengan lebih mudah bersama Smart Virtual AI dari GoGem yang siap membantu Anda kapan saja.",
       "button": "Let's Start",
@@ -91,7 +92,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         onPressed: () {
                           if (index == _pages.length - 1) {
-                            // TODO: Arahkan ke Home Page
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
+                            );
                           } else {
                             _controller.nextPage(
                               duration: const Duration(milliseconds: 300),

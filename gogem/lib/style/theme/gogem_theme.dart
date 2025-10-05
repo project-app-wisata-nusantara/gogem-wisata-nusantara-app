@@ -19,6 +19,7 @@ class GogemTheme {
       useMaterial3: true,
       brightness: Brightness.light,
       scaffoldBackgroundColor: GogemColors.backgroundLight,
+      textTheme: _textTheme,
       colorScheme: ColorScheme.light(
         primary: GogemColors.primary,
         secondary: GogemColors.secondary,
@@ -37,6 +38,7 @@ class GogemTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       scaffoldBackgroundColor: GogemColors.backgroundDark,
+      textTheme: _textTheme,
       colorScheme: ColorScheme.dark(
         primary: GogemColors.primary,
         secondary: GogemColors.accent,
