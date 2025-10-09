@@ -45,4 +45,3 @@ app.*.map.json
 /android/app/release
 
 # 🔒 Environment keys (API, secrets, etc.)
-.env
