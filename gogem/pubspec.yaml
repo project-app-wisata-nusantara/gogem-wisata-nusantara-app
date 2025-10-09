@@ -14,6 +14,15 @@ dependencies:
 
   lottie: ^3.3.0
   cupertino_icons: ^1.0.8
+  carousel_slider: ^4.2.1
+
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.1
+  google_sign_in: ^6.2.1
+  provider: ^6.1.2
+  google_maps_flutter: ^2.6.1
+  flutter_dotenv: ^5.1.0
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +44,7 @@ flutter:
     - assets/data/
     - assets/logo/
     - assets/lottie/
+    - .env
 
   uses-material-design: true
 
@@ -120,4 +130,9 @@ flutter:
           weight: 900
           style: italic
 
+dependency_overrides:
+  carousel_slider:
+    git:
+      url: https://github.com/serenader2014/flutter_carousel_slider.git
+      ref: master
 

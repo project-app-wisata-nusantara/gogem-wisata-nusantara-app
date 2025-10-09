@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "227480040643",
+    "project_id": "gogem-b5671",
+    "storage_bucket": "gogem-b5671.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227480040643:android:cbe394349ee7caef4b5e76",
+        "android_client_info": {
+          "package_name": "com.example.gogem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227480040643-pcju7771cnrkhk5e8kobfvfv9gedriq4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gogem",
+            "certificate_hash": "dded77a7ee02adeba82bb2ddf0c03cfd17e6554d"
+          }
+        },
+        {
+          "client_id": "227480040643-epr72l0usi9cuv42cjjkae2lu70uagpg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3IGFZv8402antXdivpLFwKAtidBWRo4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227480040643-epr72l0usi9cuv42cjjkae2lu70uagpg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "227480040643-5d4b2o54phnsvh0rg5eq7jddrc2p8gui.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gogem"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -13,7 +13,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _fadeController;
+  late AnimationController _scaleController;
   late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
@@ -24,14 +26,26 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 2),
     );
 
+    _scaleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1800),
+      lowerBound: 0.8,
+      upperBound: 1.0,
+    )..forward();
+
     _fadeAnimation = CurvedAnimation(
       parent: _fadeController,
       curve: Curves.easeInOut,
     );
 
+    _scaleAnimation = CurvedAnimation(
+      parent: _scaleController,
+      curve: Curves.easeOutBack,
+    );
+
     _fadeController.forward();
 
-    Timer(const Duration(seconds: 4), () async {
+    Timer(const Duration(seconds: 5), () async {
       await _fadeController.reverse();
 
       if (mounted) {
@@ -52,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void dispose() {
     _fadeController.dispose();
+    _scaleController.dispose();
     super.dispose();
   }
 
@@ -59,6 +74,14 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+
+    final logoPath = isDark
+        ? "assets/logo/dark_gogem_logo.png"
+        : "assets/logo/light_gogem_logo.png";
+
+    final lottiePath = isDark
+        ? "assets/lottie/loading_dark.json"
+        : "assets/lottie/loading_light.json";
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -68,32 +91,11 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.08)
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: isDark
-                      ? [
-                    BoxShadow(
-                      color: Colors.white.withValues(alpha: 0.3),
-                      blurRadius: 16,
-                      offset: const Offset(0, 4),
-                    ),
-                  ]
-                      : [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.04),
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
+              ScaleTransition(
+                scale: _scaleAnimation,
                 child: Image.asset(
-                  "assets/logo/logo.png",
-                  height: 300,
+                  logoPath,
+                  height: 350,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -101,21 +103,24 @@ class _SplashScreenState extends State<SplashScreen>
               const SizedBox(height: 30),
 
               Lottie.asset(
-                "assets/lottie/loading.json",
-                width: 130,
-                height: 130,
+                lottiePath,
+                width: 120,
+                height: 120,
                 fit: BoxFit.contain,
                 repeat: true,
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
-              Text(
-                "Discover Hidden Gems...",
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.secondary,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.5,
+              FadeTransition(
+                opacity: _fadeAnimation,
+                child: Text(
+                  "Discover Hidden Gems...",
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.secondary.withValues(alpha: 0.8),
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.6,
+                  ),
                 ),
               ),
             ],

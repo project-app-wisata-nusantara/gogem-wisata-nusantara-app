@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../auth/auth_screen.dart';
+
+
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -13,37 +16,43 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> _pages = [
     {
-      "image": "assets/onboarding-1.jpg",
+      "image": "assets/images/onboarding-1.jpg",
       "title": "Welcome & Intro",
-      "desc": "Selamat datang di GoGem!\nTemukan cara baru menjelajah Indonesia dengan Smart Virtual Tour Guide yang interaktif dan personal.",
+      "desc":
+      "Selamat datang di GoGem!\nTemukan cara baru menjelajah Indonesia dengan Smart Virtual Tour Guide yang interaktif dan personal.",
       "button": "Let's Go",
     },
     {
-      "image": "assets/onboarding-2.jpg",
+      "image": "assets/images/onboarding-2.jpg",
       "title": "Hidden Gems & Local Wonders",
-      "desc": "Jangan hanya ke destinasi populer.\nGoGem membawamu menemukan hidden gems, kuliner autentik, hingga produk lokal yang jarang terungkap wisatawan.",
+      "desc":
+      "Jangan hanya ke destinasi populer.\nGoGem membawamu menemukan hidden gems, kuliner autentik, hingga produk lokal yang jarang terungkap wisatawan.",
       "button": "Continue",
     },
     {
-      "image": "assets/onboarding-1.jpg",
+      "image": "assets/images/onboarding-3.png",
       "title": "Smart Virtual AI Tour Guide",
-      "desc": "Jelajahi destinasi dengan lebih mudah bersama Smart Virtual AI dari GoGem yang siap membantu Anda kapan saja.",
+      "desc":
+      "Jelajahi destinasi dengan lebih mudah bersama Smart Virtual AI dari GoGem yang siap membantu Anda kapan saja.",
       "button": "Let's Start",
     },
   ];
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    final accentColor = theme.colorScheme.secondary;
+    final onSurfaceColor = theme.colorScheme.onSurface;
+
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         children: [
           PageView.builder(
             controller: _controller,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
+            onPageChanged: (index) => setState(() => _currentPage = index),
             itemCount: _pages.length,
             itemBuilder: (context, index) {
               return Container(
@@ -52,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     image: AssetImage(_pages[index]["image"]!),
                     fit: BoxFit.cover,
                     colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.4),
+                      Colors.black.withValues(alpha: 0.4),
                       BlendMode.darken,
                     ),
                   ),
@@ -65,43 +74,51 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       Text(
                         _pages[index]["title"]!,
-                        style: const TextStyle(
-                          color: Colors.orange,
-                          fontSize: 22,
+                        style: theme.textTheme.headlineMedium?.copyWith(
+                          color: accentColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 12),
+
                       Text(
                         _pages[index]["desc"]!,
-                        style: const TextStyle(
+                        style: theme.textTheme.bodyMedium?.copyWith(
                           color: Colors.white,
-                          fontSize: 16,
-                          height: 1.4,
+                          height: 1.5,
                         ),
                       ),
                       const SizedBox(height: 30),
+
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
+                          backgroundColor: accentColor,
+                          foregroundColor: theme.colorScheme.onPrimary,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 40, vertical: 14),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
                         ),
                         onPressed: () {
                           if (index == _pages.length - 1) {
-                            // TODO: Arahkan ke Home Page
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const AuthScreen()),
+                            );
                           } else {
                             _controller.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeIn,
+                              duration: const Duration(milliseconds: 350),
+                              curve: Curves.easeInOut,
                             );
                           }
                         },
                         child: Text(
                           _pages[index]["button"]!,
-                          style: const TextStyle(fontSize: 16),
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.colorScheme.onPrimary,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 50),
@@ -111,7 +128,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               );
             },
           ),
-          // indikator dots
+
+          if (_currentPage < _pages.length - 1)
+            Positioned(
+              top: 50,
+              right: 20,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AuthScreen()),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: onSurfaceColor.withValues(alpha: 0.9),
+                ),
+                child: Text(
+                  "Lewati",
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: onSurfaceColor.withValues(alpha: 0.9),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+
+          // ---------- Indikator Dots ----------
           Positioned(
             bottom: 20,
             left: 0,
@@ -119,20 +161,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(_pages.length, (index) {
-                return Container(
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
                   margin: const EdgeInsets.symmetric(horizontal: 4),
                   width: _currentPage == index ? 12 : 8,
                   height: _currentPage == index ? 12 : 8,
                   decoration: BoxDecoration(
                     color: _currentPage == index
-                        ? Colors.orange
-                        : Colors.grey.shade400,
+                        ? accentColor
+                        : Colors.white.withValues(alpha: 0.5),
                     shape: BoxShape.circle,
                   ),
                 );
               }),
             ),
-          )
+          ),
         ],
       ),
     );
