@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "227480040643-pcg4r6iqr1rbq79r535e5nmnt0uk7kfv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gogem",
+            "certificate_hash": "ff7d3940e93c890e6a8e18f21b4f42573f7adaa1"
+          }
+        },
+        {
           "client_id": "227480040643-pcju7771cnrkhk5e8kobfvfv9gedriq4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

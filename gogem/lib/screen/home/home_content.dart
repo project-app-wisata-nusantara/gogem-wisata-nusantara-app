@@ -3,12 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gogem/screen/detail/detail_screen.dart';
 import 'package:provider/provider.dart';
 import '../../data/model/destination_model.dart';
 import '../../provider/category/category_provider.dart';
-import '../auth/auth_screen.dart';
 import '../card/destination_card.dart';
-import '../detail/destination_detail_screen.dart'; // <-- Tambahan provider kategori
+import '../profile/profile_screen.dart';
+//import '../detail/destination_detail_screen.dart'; // <-- Tambahan provider kategori
 
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
@@ -124,20 +125,15 @@ class _HomeContentState extends State<HomeContent> {
                               ),
                             ],
                           ),
-                          // === LOGOUT BUTTON ===
+                          // === PROFILE BUTTON ===
                           GestureDetector(
-                            onTap: () async {
-                              await FirebaseAuth.instance.signOut();
-                              if (context.mounted) {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                    const AuthScreen(),
-                                  ),
-                                      (route) => false,
-                                );
-                              }
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const ProfileScreen(),
+                                ),
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -154,8 +150,8 @@ class _HomeContentState extends State<HomeContent> {
                               ),
                               padding: const EdgeInsets.all(8),
                               child: const Icon(
-                                Icons.logout_rounded,
-                                color: Colors.redAccent,
+                                Icons.person_rounded,
+                                color: Colors.blueAccent,
                                 size: 22,
                               ),
                             ),
@@ -218,6 +214,7 @@ class _HomeContentState extends State<HomeContent> {
                     crossAxisCount: 4,
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
+                    childAspectRatio: 0.85,
                   ),
                   itemCount:
                   categoryProvider.categories.length,
@@ -350,7 +347,7 @@ class _HomeContentState extends State<HomeContent> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => DestinationDetailScreen(destination: dest),
+                            builder: (_) => DetailScreen(destination: dest),
                           ),
                         );
                       },
@@ -382,7 +379,7 @@ class _HomeContentState extends State<HomeContent> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => DestinationDetailScreen(destination: dest),
+                            builder: (_) => DetailScreen(destination: dest),
                           ),
                         );
                       },

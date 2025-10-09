@@ -3,6 +3,7 @@ import 'package:gogem/screen/profile/profile_menu_item.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/profile/profile_provider.dart';
+import '../auth/auth_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -125,7 +126,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               subtitle: 'Keluar dari akun ini',
               onTap: () async {
                 await profileProvider.logout();
-                // TODO: arahkan ke halaman login
+                if (context.mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AuthScreen(),
+                    ),
+                    (route) => false,
+                  );
+                }
               },
             ),
           ],

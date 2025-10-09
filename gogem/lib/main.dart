@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+///import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:gogem/provider/category/category_provider.dart';
+import 'package:gogem/provider/detail/detail_provider.dart';
+import 'package:gogem/provider/gemini/gemini_provider.dart';
 import 'package:gogem/provider/map/map_provider.dart';
 import 'package:gogem/provider/profile/profile_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,7 @@ import 'style/theme/gogem_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: ".env");
+  ///await dotenv.load(fileName: ".env");
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -41,6 +43,8 @@ class GoGemApp extends StatelessWidget {
 
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => CategoryProvider()..loadCategories()),
+        ChangeNotifierProvider(create: (_) => GeminiProvider()),
+        ChangeNotifierProvider(create: (_) => DetailProvider()),
       ],
       child: MaterialApp(
         title: 'GoGem',

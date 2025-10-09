@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 
-import '../../../config/config.dart';
+///import '../../../config/config.dart';
 import '../../../data/model/destination_model.dart';
 import '../../provider/map/map_provider.dart';
 
@@ -15,7 +15,6 @@ class MapsScreen extends StatefulWidget {
 }
 
 class _MapsScreenState extends State<MapsScreen> {
-  late GoogleMapController _mapController;
   MapType _currentMapType = MapType.normal;
 
   static const CameraPosition _initialCameraPosition = CameraPosition(
@@ -33,7 +32,7 @@ class _MapsScreenState extends State<MapsScreen> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    _mapController = controller;
+    
   }
 
   void _toggleMapType() {
