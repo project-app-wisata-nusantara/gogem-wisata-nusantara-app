@@ -9,7 +9,6 @@ import '../../data/model/destination_model.dart';
 import '../../provider/category/category_provider.dart';
 import 'package:gogem/widget/card/destination_card.dart';
 import '../profile/profile_screen.dart';
-//import '../detail/destination_detail_screen.dart'; // <-- Tambahan provider kategori
 
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
@@ -21,12 +20,12 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   List<Destination> destinations = [];
   bool isLoading = true;
+  String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
     _loadDestinations();
-    // jalankan juga provider kategori
     Future.microtask(
       () => Provider.of<CategoryProvider>(
         context,
@@ -62,7 +61,12 @@ class _HomeContentState extends State<HomeContent> {
       'assets/images/onboarding-1.jpg',
     ];
 
-    // --- Algoritma rating ---
+    // Filter untuk search
+    final filteredDestinations = destinations
+        .where((d) => d.nama.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
+
+    // Algoritma rating
     final List<Destination> populer = List.from(destinations)
       ..sort((a, b) => b.rating.compareTo(a.rating));
     final List<Destination> newHits = populer.length > 5
@@ -78,7 +82,7 @@ class _HomeContentState extends State<HomeContent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // ===== HEADER =====
+                    // ===== HEADER + SEARCH =====
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
@@ -127,7 +131,6 @@ class _HomeContentState extends State<HomeContent> {
                                     ),
                                   ],
                                 ),
-                                // === PROFILE BUTTON ===
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -143,7 +146,7 @@ class _HomeContentState extends State<HomeContent> {
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.black.withOpacity(0.15),
+                                          color: Colors.black.withValues(alpha: 0.15),
                                           blurRadius: 6,
                                           offset: const Offset(0, 2),
                                         ),
@@ -161,8 +164,7 @@ class _HomeContentState extends State<HomeContent> {
                             ),
                           ),
                         ),
-
-                        // ==== SEARCH BAR FLOATING ====
+                        // SEARCH BAR
                         Positioned(
                           bottom: -25,
                           left: 20,
@@ -174,14 +176,16 @@ class _HomeContentState extends State<HomeContent> {
                               borderRadius: BorderRadius.circular(14),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.15),
+                                  color: Colors.black.withValues(alpha: 0.15),
                                   blurRadius: 8,
                                   offset: const Offset(0, 3),
                                 ),
                               ],
                             ),
-                            child: const TextField(
-                              decoration: InputDecoration(
+                            child: TextField(
+                              onChanged: (value) =>
+                                  setState(() => _searchQuery = value),
+                              decoration: const InputDecoration(
                                 hintText: 'Cari destinasi...',
                                 hintStyle: TextStyle(color: Colors.grey),
                                 prefixIcon: Icon(
@@ -198,189 +202,257 @@ class _HomeContentState extends State<HomeContent> {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 50),
 
-                    // ===== KATEGORI =====
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: categoryProvider.isLoading
-                          ? const Center(child: CircularProgressIndicator())
-                          : GridView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4,
-                                    mainAxisSpacing: 12,
-                                    crossAxisSpacing: 12,
-                                    childAspectRatio: 0.85,
-                                  ),
-                              itemCount: categoryProvider.categories.length,
-                              itemBuilder: (context, index) {
-                                final kategori =
-                                    categoryProvider.categories[index];
-                                return _CategoryItem(
-                                  icon: _getCategoryIcon(kategori),
-                                  label: kategori,
-                                );
-                              },
-                            ),
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    // ===== SLIDER DESTINASI =====
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                          height: 180,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 4),
-                          autoPlayAnimationDuration: const Duration(
-                            milliseconds: 800,
-                          ),
-                          enlargeCenterPage: true,
-                          viewportFraction: 0.85,
-                          aspectRatio: 16 / 9,
-                          initialPage: 0,
-                        ),
-                        items: imgList.map((item) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return Container(
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 6,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Stack(
-                                    fit: StackFit.expand,
-                                    children: [
-                                      Image.asset(item, fit: BoxFit.cover),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Colors.black.withOpacity(0.4),
-                                              Colors.transparent,
-                                            ],
-                                            begin: Alignment.bottomCenter,
-                                            end: Alignment.topCenter,
-                                          ),
+                    // ===== SEARCH RESULTS / HOME CONTENT =====
+                    _searchQuery.isNotEmpty
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const _SectionTitle(title: "Hasil Pencarian"),
+                              const SizedBox(height: 8),
+                              filteredDestinations.isEmpty
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(24),
+                                      child: Center(
+                                        child: Text(
+                                          "Tidak ada destinasi yang cocok.",
+                                          style: TextStyle(color: Colors.grey),
                                         ),
                                       ),
-                                      Positioned(
-                                        left: 16,
-                                        bottom: 16,
-                                        child: Text(
-                                          item
-                                              .split('/')
-                                              .last
-                                              .split('.')
-                                              .first
-                                              .replaceAll('_', ' ')
-                                              .toUpperCase(),
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            shadows: [
-                                              Shadow(
-                                                color: Colors.black54,
-                                                blurRadius: 4,
+                                    )
+                                  : SizedBox(
+                                      height: 240,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                        ),
+                                        itemCount: filteredDestinations.length,
+                                        itemBuilder: (context, index) {
+                                          final dest =
+                                              filteredDestinations[index];
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => DetailScreen(
+                                                    destination: dest,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: DestinationCard(
+                                              destination: dest,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                              const SizedBox(height: 24),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // ===== KATEGORI =====
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: categoryProvider.isLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : GridView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 4,
+                                              mainAxisSpacing: 12,
+                                              crossAxisSpacing: 12,
+                                              childAspectRatio: 0.85,
+                                            ),
+                                        itemCount:
+                                            categoryProvider.categories.length,
+                                        itemBuilder: (context, index) {
+                                          final kategori = categoryProvider
+                                              .categories[index];
+                                          return _CategoryItem(
+                                            icon: _getCategoryIcon(kategori),
+                                            label: kategori,
+                                          );
+                                        },
+                                      ),
+                              ),
+
+                              const SizedBox(height: 24),
+
+                              // ===== SLIDER DESTINASI =====
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                ),
+                                child: CarouselSlider(
+                                  options: CarouselOptions(
+                                    height: 180,
+                                    autoPlay: true,
+                                    autoPlayInterval: const Duration(
+                                      seconds: 4,
+                                    ),
+                                    autoPlayAnimationDuration: const Duration(
+                                      milliseconds: 800,
+                                    ),
+                                    enlargeCenterPage: true,
+                                    viewportFraction: 0.85,
+                                    aspectRatio: 16 / 9,
+                                    initialPage: 0,
+                                  ),
+                                  items: imgList.map((item) {
+                                    return Builder(
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          margin: const EdgeInsets.symmetric(
+                                            horizontal: 6,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withValues(
+                                                  alpha: 0.15,
+                                                ),
+                                                blurRadius: 8,
+                                                offset: const Offset(0, 4),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            child: Stack(
+                                              fit: StackFit.expand,
+                                              children: [
+                                                Image.asset(
+                                                  item,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Colors.black
+                                                            .withValues(alpha: 0.15),
+                                                        Colors.transparent,
+                                                      ],
+                                                      begin: Alignment
+                                                          .bottomCenter,
+                                                      end: Alignment.topCenter,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  left: 16,
+                                                  bottom: 16,
+                                                  child: Text(
+                                                    item
+                                                        .split('/')
+                                                        .last
+                                                        .split('.')
+                                                        .first
+                                                        .replaceAll('_', ' ')
+                                                        .toUpperCase(),
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      shadows: [
+                                                        Shadow(
+                                                          color: Colors.black54,
+                                                          blurRadius: 4,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
                                 ),
-                              );
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    ),
+                              ),
 
-                    const SizedBox(height: 24),
+                              const SizedBox(height: 24),
 
-                    // ===== POPULER =====
-                    const _SectionTitle(title: "Populer"),
-                    SizedBox(
-                      height: 240, // height aman untuk card
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.only(left: 16),
-                        itemCount: populer.length > 5 ? 5 : populer.length,
-                        itemBuilder: (context, index) {
-                          final dest = populer[index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      DetailScreen(destination: dest),
+                              // ===== POPULER =====
+                              const _SectionTitle(title: "Populer"),
+                              const SizedBox(height: 8),
+                              SizedBox(
+                                height: 240,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  padding: const EdgeInsets.only(left: 16),
+                                  itemCount: populer.length > 5
+                                      ? 5
+                                      : populer.length,
+                                  itemBuilder: (context, index) {
+                                    final dest = populer[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                DetailScreen(destination: dest),
+                                          ),
+                                        );
+                                      },
+                                      child: DestinationCard(destination: dest),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                            child: DestinationCard(
-                              title: dest.nama,
-                              location: dest.kabupatenKota,
-                              imagePath: dest.linkGambar,
-                              rating: dest.rating,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                              ),
+                              const SizedBox(height: 24),
 
-                    const SizedBox(height: 24),
-
-                    // ===== NEW HITS =====
-                    const _SectionTitle(title: "New Hits"),
-                    SizedBox(
-                      height: 240,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.only(left: 16),
-                        itemCount: newHits.length,
-                        itemBuilder: (context, index) {
-                          final dest = newHits[index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      DetailScreen(destination: dest),
+                              // ===== NEW HITS =====
+                              const _SectionTitle(title: "New Hits"),
+                              const SizedBox(height: 8),
+                              SizedBox(
+                                height: 240,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  padding: const EdgeInsets.only(left: 16),
+                                  itemCount: newHits.length,
+                                  itemBuilder: (context, index) {
+                                    final dest = newHits[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                DetailScreen(destination: dest),
+                                          ),
+                                        );
+                                      },
+                                      child: DestinationCard(destination: dest),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                            child: DestinationCard(
-                              title: dest.nama,
-                              location: dest.kabupatenKota,
-                              imagePath: dest.linkGambar,
-                              rating: dest.rating,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 24),
+                              ),
+                              const SizedBox(height: 24),
+                            ],
+                          ),
                   ],
                 ),
               ),
@@ -389,7 +461,7 @@ class _HomeContentState extends State<HomeContent> {
   }
 }
 
-// ===== ICON HELPER =====
+// ===== HELPER & WIDGET =====
 IconData _getCategoryIcon(String kategori) {
   switch (kategori.toLowerCase()) {
     case 'alam':
@@ -405,7 +477,6 @@ IconData _getCategoryIcon(String kategori) {
   }
 }
 
-// ===== CATEGORY ITEM =====
 class _CategoryItem extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -434,7 +505,6 @@ class _CategoryItem extends StatelessWidget {
   }
 }
 
-// ===== SECTION TITLE =====
 class _SectionTitle extends StatelessWidget {
   final String title;
   const _SectionTitle({required this.title});

@@ -26,7 +26,10 @@ class Destination {
   });
 
   factory Destination.fromJson(Map<String, dynamic> json) {
-    final generatedId = '${json['nama']}_${json['kabupaten_kota']}'.replaceAll(' ', '_');
+    final generatedId = '${json['nama']}_${json['kabupaten_kota']}'.replaceAll(
+      ' ',
+      '_',
+    );
 
     return Destination(
       id: generatedId,
@@ -90,5 +93,4 @@ class Destination {
       deskripsi: '',
     );
   }
-
 }

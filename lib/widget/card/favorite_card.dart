@@ -33,38 +33,38 @@ class FavoriteCard extends StatelessWidget {
                 tag: 'image_${destination.id}',
                 child: destination.linkGambar.startsWith('http')
                     ? Image.network(
-                  destination.linkGambar,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                      width: 100,
-                      height: 100,
-                      color: Colors.grey.shade300,
-                      child: const Center(
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.grey.shade300,
-                    child: const Icon(
-                      Icons.broken_image,
-                      size: 30,
-                      color: Colors.grey,
-                    ),
-                  ),
-                )
+                        destination.linkGambar,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.grey.shade300,
+                            child: const Center(
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          width: 100,
+                          height: 100,
+                          color: Colors.grey.shade300,
+                          child: const Icon(
+                            Icons.broken_image,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      )
                     : Image.asset(
-                  destination.linkGambar,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
+                        destination.linkGambar,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             Expanded(

@@ -55,7 +55,7 @@ class _DetailScreenState extends State<DetailScreen> {
   void _checkAndGenerateSummary() {
     final hasOriginalDescription =
         widget.destination.deskripsi != null &&
-            widget.destination.deskripsi!.trim().isNotEmpty;
+        widget.destination.deskripsi!.trim().isNotEmpty;
 
     if (!hasOriginalDescription && !_hasTriedToGenerate) {
       _hasTriedToGenerate = true;
@@ -120,13 +120,13 @@ class _DetailScreenState extends State<DetailScreen> {
                     children: [
                       widget.destination.linkGambar.startsWith('http')
                           ? Image.network(
-                        widget.destination.linkGambar,
-                        fit: BoxFit.cover,
-                      )
+                              widget.destination.linkGambar,
+                              fit: BoxFit.cover,
+                            )
                           : Image.asset(
-                        widget.destination.linkGambar,
-                        fit: BoxFit.cover,
-                      ),
+                              widget.destination.linkGambar,
+                              fit: BoxFit.cover,
+                            ),
 
                       // --- Nama & lokasi
                       Positioned(
@@ -149,8 +149,11 @@ class _DetailScreenState extends State<DetailScreen> {
                             const SizedBox(height: 4),
                             Row(
                               children: [
-                                const Icon(Icons.location_on,
-                                    color: Colors.white, size: 16),
+                                const Icon(
+                                  Icons.location_on,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
                                 const SizedBox(width: 4),
                                 Text(
                                   widget.destination.kabupatenKota,
@@ -159,8 +162,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                     fontSize: 14,
                                     shadows: [
                                       Shadow(
-                                          color: Colors.black45,
-                                          blurRadius: 10),
+                                        color: Colors.black45,
+                                        blurRadius: 10,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -179,29 +183,34 @@ class _DetailScreenState extends State<DetailScreen> {
                           children: [
                             // Tombol favorit (hati)
                             FutureBuilder<bool>(
-                              future: favoriteProvider
-                                  .isFavorite(widget.destination.id),
+                              future: favoriteProvider.isFavorite(
+                                widget.destination.id,
+                              ),
                               builder: (context, snapshot) {
                                 final isFav = snapshot.data ?? false;
                                 return FloatingActionButton(
                                   heroTag: 'favBtn',
                                   mini: true,
-                                  backgroundColor:
-                                  Colors.red,
+                                  backgroundColor: Colors.red,
                                   onPressed: () async {
-                                    await favoriteProvider
-                                        .toggleFavorite(widget.destination);
+                                    await favoriteProvider.toggleFavorite(
+                                      widget.destination,
+                                    );
                                     if (context.mounted) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text(
-                                          isFav
-                                              ? 'Dihapus dari favorit'
-                                              : 'Ditambahkan ke favorit',
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            isFav
+                                                ? 'Dihapus dari favorit'
+                                                : 'Ditambahkan ke favorit',
+                                          ),
+                                          duration: const Duration(
+                                            milliseconds: 1200,
+                                          ),
                                         ),
-                                        duration:
-                                        const Duration(milliseconds: 1200),
-                                      ));
+                                      );
                                     }
                                     setState(() {}); // Refresh ikon
                                   },
@@ -239,10 +248,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ];
           },
           body: TabBarView(
-            children: [
-              _buildRingkasanTab(),
-              _buildChatbotTab(),
-            ],
+            children: [_buildRingkasanTab(), _buildChatbotTab()],
           ),
         ),
       ),
@@ -262,7 +268,7 @@ class _DetailScreenState extends State<DetailScreen> {
         // Cek apakah deskripsi kosong atau null
         final bool hasOriginalDescription =
             widget.destination.deskripsi != null &&
-                widget.destination.deskripsi!.trim().isNotEmpty;
+            widget.destination.deskripsi!.trim().isNotEmpty;
 
         // Tentukan deskripsi yang akan ditampilkan
         final String displayDescription = hasOriginalDescription
@@ -336,78 +342,78 @@ class _DetailScreenState extends State<DetailScreen> {
                         )
                       // Tampilkan deskripsi
                       else if (displayDescription.isNotEmpty)
-                          Consumer<DetailProvider>(
-                            builder: (context, detailProvider, child) {
-                              final isExpanded = detailProvider.isExpanded;
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    displayDescription,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black87,
-                                      height: 1.5,
-                                    ),
-                                    maxLines: isExpanded ? null : _maxLines,
-                                    overflow: isExpanded
-                                        ? TextOverflow.visible
-                                        : TextOverflow.ellipsis,
+                        Consumer<DetailProvider>(
+                          builder: (context, detailProvider, child) {
+                            final isExpanded = detailProvider.isExpanded;
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  displayDescription,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                    height: 1.5,
                                   ),
-                                  if (_needsReadMore(
-                                    displayDescription,
-                                    isExpanded,
-                                  ))
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: TextButton(
-                                        onPressed: () {
-                                          detailProvider.toggleExpanded();
-                                        },
-                                        style: TextButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 4,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              isExpanded
-                                                  ? 'Sembunyikan'
-                                                  : 'Selengkapnya',
-                                              style: const TextStyle(
-                                                color: Colors.orange,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                            Icon(
-                                              isExpanded
-                                                  ? Icons.keyboard_arrow_up
-                                                  : Icons.keyboard_arrow_down,
-                                              color: Colors.orange,
-                                              size: 18,
-                                            ),
-                                          ],
+                                  maxLines: isExpanded ? null : _maxLines,
+                                  overflow: isExpanded
+                                      ? TextOverflow.visible
+                                      : TextOverflow.ellipsis,
+                                ),
+                                if (_needsReadMore(
+                                  displayDescription,
+                                  isExpanded,
+                                ))
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        detailProvider.toggleExpanded();
+                                      },
+                                      style: TextButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 4,
                                         ),
                                       ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            isExpanded
+                                                ? 'Sembunyikan'
+                                                : 'Selengkapnya',
+                                            style: const TextStyle(
+                                              color: Colors.orange,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                          Icon(
+                                            isExpanded
+                                                ? Icons.keyboard_arrow_up
+                                                : Icons.keyboard_arrow_down,
+                                            color: Colors.orange,
+                                            size: 18,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                ],
-                              );
-                            },
-                          )
-                        else
-                          const Center(
-                            child: Text(
-                              'Tidak ada deskripsi tersedia.',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black54,
-                              ),
+                                  ),
+                              ],
+                            );
+                          },
+                        )
+                      else
+                        const Center(
+                          child: Text(
+                            'Tidak ada deskripsi tersedia.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
                             ),
                           ),
+                        ),
                       const SizedBox(height: 24),
                       const Text(
                         'Jarak',
@@ -504,117 +510,117 @@ class _DetailScreenState extends State<DetailScreen> {
               Expanded(
                 child: detailProvider.messages.isEmpty
                     ? SingleChildScrollView(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 16),
-                      if (detailProvider.isGeneratingChatbotInfo)
-                        const Center(
-                          child: Column(
-                            children: [
-                              CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.orange,
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 16),
+                            if (detailProvider.isGeneratingChatbotInfo)
+                              const Center(
+                                child: Column(
+                                  children: [
+                                    CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.orange,
+                                      ),
+                                    ),
+                                    SizedBox(height: 12),
+                                    Text(
+                                      'Memuat informasi chatbot...',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black54,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(height: 12),
-                              Text(
-                                'Memuat informasi chatbot...',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black54,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      else ...[
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.orange.shade50,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Colors.orange.shade200,
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.info_outline,
-                                color: Colors.orange.shade700,
-                                size: 24,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  detailProvider.chatbotDescription ??
-                                      'Tanyakan informasi tentang ${widget.destination.nama}!',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey[800],
-                                    height: 1.5,
+                              )
+                            else ...[
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange.shade50,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: Colors.orange.shade200,
+                                    width: 1,
                                   ),
                                 ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.info_outline,
+                                      color: Colors.orange.shade700,
+                                      size: 24,
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        detailProvider.chatbotDescription ??
+                                            'Tanyakan informasi tentang ${widget.destination.nama}!',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[800],
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              Text(
+                                'Contoh Pertanyaan:',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              _buildExampleQuestion(
+                                icon: Icons.confirmation_number_outlined,
+                                question:
+                                    'Dimana saya bisa membeli tiket online?',
+                                onTap: () {
+                                  _chatController.text =
+                                      'Dimana saya bisa membeli tiket online?';
+                                },
+                              ),
+                              const SizedBox(height: 8),
+                              _buildExampleQuestion(
+                                icon: Icons.directions_outlined,
+                                question:
+                                    'Berapa lama perjalanan dari lokasi saya?',
+                                onTap: () {
+                                  _chatController.text =
+                                      'Berapa lama perjalanan dari lokasi saya?';
+                                },
+                              ),
+                              const SizedBox(height: 8),
+                              _buildExampleQuestion(
+                                icon: Icons.access_time_outlined,
+                                question: 'Kapan wisata ini buka?',
+                                onTap: () {
+                                  _chatController.text =
+                                      'Kapan wisata ini buka?';
+                                },
                               ),
                             ],
-                          ),
+                          ],
                         ),
-                        const SizedBox(height: 24),
-                        Text(
-                          'Contoh Pertanyaan:',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        _buildExampleQuestion(
-                          icon: Icons.confirmation_number_outlined,
-                          question:
-                          'Dimana saya bisa membeli tiket online?',
-                          onTap: () {
-                            _chatController.text =
-                            'Dimana saya bisa membeli tiket online?';
-                          },
-                        ),
-                        const SizedBox(height: 8),
-                        _buildExampleQuestion(
-                          icon: Icons.directions_outlined,
-                          question:
-                          'Berapa lama perjalanan dari lokasi saya?',
-                          onTap: () {
-                            _chatController.text =
-                            'Berapa lama perjalanan dari lokasi saya?';
-                          },
-                        ),
-                        const SizedBox(height: 8),
-                        _buildExampleQuestion(
-                          icon: Icons.access_time_outlined,
-                          question: 'Kapan wisata ini buka?',
-                          onTap: () {
-                            _chatController.text =
-                            'Kapan wisata ini buka?';
-                          },
-                        ),
-                      ],
-                    ],
-                  ),
-                )
+                      )
                     : ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: detailProvider.messages.length,
-                  itemBuilder: (context, index) {
-                    final message = detailProvider.messages[index];
-                    return _buildChatBubble(message);
-                  },
-                ),
+                        controller: _scrollController,
+                        padding: const EdgeInsets.all(16.0),
+                        itemCount: detailProvider.messages.length,
+                        itemBuilder: (context, index) {
+                          final message = detailProvider.messages[index];
+                          return _buildChatBubble(message);
+                        },
+                      ),
               ),
               Container(
                 padding: const EdgeInsets.all(16.0),
@@ -648,7 +654,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             // Scroll to bottom setelah kirim pesan
                             Future.delayed(
                               const Duration(milliseconds: 300),
-                                  () {
+                              () {
                                 if (_scrollController.hasClients) {
                                   _scrollController.animateTo(
                                     _scrollController.position.maxScrollExtent,
@@ -673,42 +679,42 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: IconButton(
                         icon: detailProvider.isSendingMessage
                             ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white,
-                            ),
-                          ),
-                        )
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
+                                ),
+                              )
                             : const Icon(Icons.send, color: Colors.white),
                         onPressed: detailProvider.isSendingMessage
                             ? null
                             : () {
-                          final message = _chatController.text;
-                          if (message.trim().isNotEmpty) {
-                            detailProvider.sendMessage(message);
-                            _chatController.clear();
-                            // Scroll to bottom setelah kirim pesan
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                                  () {
-                                if (_scrollController.hasClients) {
-                                  _scrollController.animateTo(
-                                    _scrollController
-                                        .position
-                                        .maxScrollExtent,
-                                    duration: const Duration(
-                                      milliseconds: 300,
-                                    ),
-                                    curve: Curves.easeOut,
+                                final message = _chatController.text;
+                                if (message.trim().isNotEmpty) {
+                                  detailProvider.sendMessage(message);
+                                  _chatController.clear();
+                                  // Scroll to bottom setelah kirim pesan
+                                  Future.delayed(
+                                    const Duration(milliseconds: 300),
+                                    () {
+                                      if (_scrollController.hasClients) {
+                                        _scrollController.animateTo(
+                                          _scrollController
+                                              .position
+                                              .maxScrollExtent,
+                                          duration: const Duration(
+                                            milliseconds: 300,
+                                          ),
+                                          curve: Curves.easeOut,
+                                        );
+                                      }
+                                    },
                                   );
                                 }
                               },
-                            );
-                          }
-                        },
                       ),
                     ),
                   ],
@@ -725,7 +731,7 @@ class _DetailScreenState extends State<DetailScreen> {
     // Check apakah ini response tentang platform tiket
     final isPlatformResponse =
         !message.isUser &&
-            message.text.contains('Berikut rekomendasi platform');
+        message.text.contains('Berikut rekomendasi platform');
 
     return Align(
       alignment: message.isUser ? Alignment.centerRight : Alignment.centerLeft,
@@ -982,10 +988,10 @@ class _StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context,
-      double shrinkOffset,
-      bool overlapsContent,
-      ) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Container(color: const Color(0xFFFFF8E1), child: tabBar);
   }
 

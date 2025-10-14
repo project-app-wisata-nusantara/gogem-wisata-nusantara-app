@@ -13,11 +13,7 @@ class DbHelper {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'favorites.db');
 
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -49,20 +45,12 @@ class DbHelper {
 
   Future<void> removeFavorite(String id) async {
     final db = await database;
-    await db.delete(
-      'favorites',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    await db.delete('favorites', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<bool> isFavorite(String id) async {
     final db = await database;
-    final maps = await db.query(
-      'favorites',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    final maps = await db.query('favorites', where: 'id = ?', whereArgs: [id]);
     return maps.isNotEmpty;
   }
 
@@ -73,4 +61,3 @@ class DbHelper {
     return maps.map((map) => Destination.fromMap(map)).toList();
   }
 }
-

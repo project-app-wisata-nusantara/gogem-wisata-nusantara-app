@@ -34,7 +34,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     final favorites = provider.favorites;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFE3F6FF), // biru muda lembut
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
@@ -55,19 +54,19 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           ? const Center(child: CircularProgressIndicator())
           : favorites.isEmpty
           ? const Center(
-        child: Text(
-          "Belum ada destinasi favorit.",
-          style: TextStyle(fontSize: 16),
-        ),
-      )
+              child: Text(
+                "Belum ada destinasi favorit.",
+                style: TextStyle(fontSize: 16),
+              ),
+            )
           : ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: favorites.length,
-        itemBuilder: (context, index) {
-          final destination = favorites[index];
-          return _FavoriteDestinationCard(destination: destination);
-        },
-      ),
+              padding: const EdgeInsets.all(16),
+              itemCount: favorites.length,
+              itemBuilder: (context, index) {
+                final destination = favorites[index];
+                return _FavoriteDestinationCard(destination: destination);
+              },
+            ),
     );
   }
 }
@@ -81,9 +80,7 @@ class _FavoriteDestinationCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: 20),
       elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       clipBehavior: Clip.hardEdge,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +92,7 @@ class _FavoriteDestinationCard extends StatelessWidget {
               destination.linkGambar,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) =>
-              const Center(child: Icon(Icons.broken_image, size: 40)),
+                  const Center(child: Icon(Icons.broken_image, size: 40)),
             ),
           ),
           // Informasi destinasi
@@ -134,8 +131,10 @@ class _FavoriteDestinationCard extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.favorite, color: Colors.red),
                       onPressed: () {
-                        final provider =
-                        Provider.of<FavoriteProvider>(context, listen: false);
+                        final provider = Provider.of<FavoriteProvider>(
+                          context,
+                          listen: false,
+                        );
                         provider.toggleFavorite(destination);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

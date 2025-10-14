@@ -25,9 +25,7 @@ Future<void> main() async {
   // Jika menggunakan dotenv (misal untuk API_KEY), aktifkan ini:
   // await dotenv.load(fileName: ".env");
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const GoGemApp());
 }

@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:gogem/data/model/destination_model.dart';
 import '../../style/theme/gogem_theme.dart';
 
 class DestinationCard extends StatelessWidget {
-  final String title;
-  final String location;
-  final String imagePath;
-  final double rating;
+  final Destination destination;
 
-  const DestinationCard({
-    super.key,
-    required this.title,
-    required this.location,
-    required this.imagePath,
-    required this.rating,
-  });
+  const DestinationCard({super.key, required this.destination});
 
   @override
   Widget build(BuildContext context) {
@@ -33,21 +24,20 @@ class DestinationCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // <-- Penting
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ==== IMAGE ====
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: imagePath.startsWith('http')
+            child: destination.linkGambar.startsWith('http')
                 ? Image.network(
-                    imagePath,
+                    destination.linkGambar,
                     height: 120,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   )
                 : Image.asset(
-                    imagePath,
+                    destination.linkGambar,
                     height: 120,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -56,11 +46,11 @@ class DestinationCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Column(
-              mainAxisSize: MainAxisSize.min, // <-- Tambahkan juga
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  destination.nama,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -79,7 +69,7 @@ class DestinationCard extends StatelessWidget {
                     const SizedBox(width: 2),
                     Expanded(
                       child: Text(
-                        location,
+                        destination.kabupatenKota,
                         style: const TextStyle(
                           fontSize: 11,
                           color: Colors.black54,
@@ -95,7 +85,7 @@ class DestinationCard extends StatelessWidget {
                     const Icon(Icons.star, color: Colors.orange, size: 14),
                     const SizedBox(width: 2),
                     Text(
-                      rating.toString(),
+                      destination.rating.toString(),
                       style: const TextStyle(
                         fontSize: 12,
                         color: Colors.black87,
