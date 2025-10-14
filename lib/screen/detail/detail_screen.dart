@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../data/model/destination_model.dart';
-import '../../data/ticketing_data.dart';
-import '../../provider/detail/detail_provider.dart'
+import 'package:gogem/data/model/destination_model.dart';
+import 'package:gogem/data/ticketing_data.dart';
+import 'package:gogem/provider/detail/detail_provider.dart'
     show DetailProvider, ChatMessage;
-import '../../provider/gemini/gemini_provider.dart';
-import '../../provider/favorite/favorite_provider.dart';
-import '../profile/profile_screen.dart';
+import 'package:gogem/provider/gemini/gemini_provider.dart';
+import 'package:gogem/provider/favorite/favorite_provider.dart';
+import 'package:gogem/screen/profile/profile_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -174,10 +174,10 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                       ),
 
-                      // --- Tombol favorite & bookmark
+                      // --- Tombol favorite
                       Positioned(
-                        bottom: 12,
-                        right: 12,
+                        bottom: 8,
+                        right: 8,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

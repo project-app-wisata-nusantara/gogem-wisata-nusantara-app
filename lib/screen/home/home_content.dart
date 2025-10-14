@@ -1,14 +1,16 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gogem/screen/detail/detail_screen.dart';
-import 'package:provider/provider.dart';
-import '../../data/model/destination_model.dart';
-import '../../provider/category/category_provider.dart';
+import 'package:gogem/provider/favorite/favorite_provider.dart';
+import 'package:gogem/provider/category/category_provider.dart';
+import 'package:gogem/data/model/destination_model.dart';
 import 'package:gogem/widget/card/destination_card.dart';
-import '../profile/profile_screen.dart';
+import 'package:gogem/screen/profile/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
@@ -21,6 +23,7 @@ class _HomeContentState extends State<HomeContent> {
   List<Destination> destinations = [];
   bool isLoading = true;
   String _searchQuery = '';
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -32,6 +35,12 @@ class _HomeContentState extends State<HomeContent> {
         listen: false,
       ).loadCategories(),
     );
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 
   Future<void> _loadDestinations() async {
@@ -49,29 +58,37 @@ class _HomeContentState extends State<HomeContent> {
     });
   }
 
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 300), () {
+      setState(() {
+        _searchQuery = query;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final user = FirebaseAuth.instance.currentUser;
     final categoryProvider = Provider.of<CategoryProvider>(context);
+    final favoriteProvider = Provider.of<FavoriteProvider>(context);
+    final filteredDestinations = destinations
+        .where((d) => d.nama.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
+
+    // Rating & kategori
+    final List<Destination> populer = List.from(destinations)
+      ..sort((a, b) => b.rating.compareTo(a.rating));
+    final List<Destination> newHits = populer.length > 5
+        ? populer.sublist(3, 7)
+        : populer.take(3).toList();
     final List<String> imgList = [
       'assets/images/onboarding-1.jpg',
       'assets/images/onboarding-2.jpg',
       'assets/images/onboarding-3.png',
       'assets/images/onboarding-1.jpg',
     ];
-
-    // Filter untuk search
-    final filteredDestinations = destinations
-        .where((d) => d.nama.toLowerCase().contains(_searchQuery.toLowerCase()))
-        .toList();
-
-    // Algoritma rating
-    final List<Destination> populer = List.from(destinations)
-      ..sort((a, b) => b.rating.compareTo(a.rating));
-    final List<Destination> newHits = populer.length > 5
-        ? populer.sublist(3, 7)
-        : populer.take(3).toList();
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -132,21 +149,21 @@ class _HomeContentState extends State<HomeContent> {
                                   ],
                                 ),
                                 GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => const ProfileScreen(),
-                                      ),
-                                    );
-                                  },
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const ProfileScreen(),
+                                    ),
+                                  ),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.15),
+                                          color: Colors.black.withValues(
+                                            alpha: 0.15,
+                                          ),
                                           blurRadius: 6,
                                           offset: const Offset(0, 2),
                                         ),
@@ -164,6 +181,7 @@ class _HomeContentState extends State<HomeContent> {
                             ),
                           ),
                         ),
+
                         // SEARCH BAR
                         Positioned(
                           bottom: -25,
@@ -183,8 +201,7 @@ class _HomeContentState extends State<HomeContent> {
                               ],
                             ),
                             child: TextField(
-                              onChanged: (value) =>
-                                  setState(() => _searchQuery = value),
+                              onChanged: _onSearchChanged,
                               decoration: const InputDecoration(
                                 hintText: 'Cari destinasi...',
                                 hintStyle: TextStyle(color: Colors.grey),
@@ -204,7 +221,7 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     const SizedBox(height: 50),
 
-                    // ===== SEARCH RESULTS / HOME CONTENT =====
+                    // ===== SEARCH RESULTS =====
                     _searchQuery.isNotEmpty
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,36 +238,23 @@ class _HomeContentState extends State<HomeContent> {
                                         ),
                                       ),
                                     )
-                                  : SizedBox(
-                                      height: 240,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                        ),
-                                        itemCount: filteredDestinations.length,
-                                        itemBuilder: (context, index) {
-                                          final dest =
-                                              filteredDestinations[index];
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) => DetailScreen(
-                                                    destination: dest,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: DestinationCard(
-                                              destination: dest,
-                                            ),
-                                          );
-                                        },
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
                                       ),
+                                      itemCount: filteredDestinations.length,
+                                      itemBuilder: (context, index) {
+                                        final dest =
+                                            filteredDestinations[index];
+                                        return _SearchDestinationCard(
+                                          destination: dest,
+                                          favoriteProvider: favoriteProvider,
+                                        );
+                                      },
                                     ),
-                              const SizedBox(height: 24),
                             ],
                           )
                         : Column(
@@ -291,7 +295,7 @@ class _HomeContentState extends State<HomeContent> {
 
                               const SizedBox(height: 24),
 
-                              // ===== SLIDER DESTINASI =====
+                              // ===== SLIDER =====
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 10,
@@ -347,8 +351,9 @@ class _HomeContentState extends State<HomeContent> {
                                                   decoration: BoxDecoration(
                                                     gradient: LinearGradient(
                                                       colors: [
-                                                        Colors.black
-                                                            .withValues(alpha: 0.15),
+                                                        Colors.black.withValues(
+                                                          alpha: 0.15,
+                                                        ),
                                                         Colors.transparent,
                                                       ],
                                                       begin: Alignment
@@ -408,15 +413,13 @@ class _HomeContentState extends State<HomeContent> {
                                   itemBuilder: (context, index) {
                                     final dest = populer[index];
                                     return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                DetailScreen(destination: dest),
-                                          ),
-                                        );
-                                      },
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              DetailScreen(destination: dest),
+                                        ),
+                                      ),
                                       child: DestinationCard(destination: dest),
                                     );
                                   },
@@ -436,15 +439,13 @@ class _HomeContentState extends State<HomeContent> {
                                   itemBuilder: (context, index) {
                                     final dest = newHits[index];
                                     return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                DetailScreen(destination: dest),
-                                          ),
-                                        );
-                                      },
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              DetailScreen(destination: dest),
+                                        ),
+                                      ),
                                       child: DestinationCard(destination: dest),
                                     );
                                   },
@@ -461,7 +462,7 @@ class _HomeContentState extends State<HomeContent> {
   }
 }
 
-// ===== HELPER & WIDGET =====
+// ===== HELPER WIDGETS =====
 IconData _getCategoryIcon(String kategori) {
   switch (kategori.toLowerCase()) {
     case 'alam':
@@ -529,6 +530,106 @@ class _SectionTitle extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _SearchDestinationCard extends StatelessWidget {
+  final Destination destination;
+  final FavoriteProvider favoriteProvider;
+
+  const _SearchDestinationCard({
+    required this.destination,
+    required this.favoriteProvider,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isFavorited = favoriteProvider.favorites.contains(destination);
+
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => DetailScreen(destination: destination),
+        ),
+      ),
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 20),
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                destination.linkGambar,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Center(child: Icon(Icons.broken_image, size: 40)),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    destination.nama,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber, size: 18),
+                      const SizedBox(width: 4),
+                      Text(
+                        destination.rating.toStringAsFixed(1),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        destination.kabupatenKota,
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: Icon(
+                          isFavorited ? Icons.favorite : Icons.favorite_border,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {
+                          favoriteProvider.toggleFavorite(destination);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                isFavorited
+                                    ? "Dihapus dari favorit"
+                                    : "Ditambahkan ke favorit",
+                              ),
+                              duration: const Duration(milliseconds: 1200),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

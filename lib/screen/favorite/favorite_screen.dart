@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:gogem/provider/home/home_provider.dart';
 import 'package:gogem/provider/favorite/favorite_provider.dart';
 import 'package:gogem/data/model/destination_model.dart';
+import 'package:gogem/screen/detail/detail_screen.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
@@ -77,79 +78,91 @@ class _FavoriteDestinationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 20),
-      elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      clipBehavior: Clip.hardEdge,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar destinasi
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Image.network(
-              destination.linkGambar,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) =>
-                  const Center(child: Icon(Icons.broken_image, size: 40)),
-            ),
+    final favoriteProvider = Provider.of<FavoriteProvider>(
+      context,
+      listen: false,
+    );
+
+    return GestureDetector(
+      onTap: () {
+        // Navigasi ke detail screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => DetailScreen(destination: destination),
           ),
-          // Informasi destinasi
-          Container(
-            width: double.infinity,
-            color: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  destination.nama,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+        );
+      },
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 20),
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Gambar destinasi
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                destination.linkGambar,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Center(child: Icon(Icons.broken_image, size: 40)),
+              ),
+            ),
+            // Informasi destinasi
+            Container(
+              width: double.infinity,
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    destination.nama,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.amber, size: 18),
-                    const SizedBox(width: 4),
-                    Text(
-                      destination.rating.toStringAsFixed(1),
-                      style: const TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      destination.kabupatenKota,
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 13,
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber, size: 18),
+                      const SizedBox(width: 4),
+                      Text(
+                        destination.rating.toStringAsFixed(1),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: const Icon(Icons.favorite, color: Colors.red),
-                      onPressed: () {
-                        final provider = Provider.of<FavoriteProvider>(
-                          context,
-                          listen: false,
-                        );
-                        provider.toggleFavorite(destination);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Dihapus dari favorit"),
-                            duration: Duration(milliseconds: 1200),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                      const SizedBox(width: 4),
+                      Text(
+                        destination.kabupatenKota,
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.favorite, color: Colors.red),
+                        onPressed: () {
+                          favoriteProvider.toggleFavorite(destination);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Dihapus dari favorit"),
+                              duration: Duration(milliseconds: 1200),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
