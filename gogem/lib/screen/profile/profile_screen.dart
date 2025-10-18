@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gogem/screen/profile/profile_menu_item.dart';
+import 'package:gogem/screen/profile/faq_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/profile/profile_provider.dart';
 import '../auth/auth_screen.dart';
+// Import file tema Anda agar bisa mengakses GogemColors
+import '../../style/theme/gogem_theme.dart'; 
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -27,8 +30,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final email = profileProvider.email ?? 'xxx@gmail.com';
     final photoUrl = profileProvider.photoUrl;
 
+    // --- VARIABEL THEME ADAPTIF ---
+    // Menggunakan latar belakang dari tema, bukan hardcode
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final Color textColor = Theme.of(context).colorScheme.onBackground;
+    final Color lightTextColor = textColor.withOpacity(0.7); // Warna teks sekunder
+    final Color dividerColor = Theme.of(context).dividerColor;
+    // Latar belakang Scaffold sudah diatur di GogemTheme.scaffoldBackgroundColor
+
     return Scaffold(
-      backgroundColor: const Color(0xFFFDF6E3),
+      // Hapus hardcode warna background, biarkan Scaffold yang menanganinya
+      // backgroundColor: const Color(0xFFFDF6E3), 
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -36,6 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Stack(
               children: [
                 // Header image
+                // Catatan: Gambar header biasanya perlu diganti dengan gambar yang Dark-Mode friendly
                 Image.asset(
                   'assets/images/profile_header.png',
                   width: double.infinity,
@@ -51,11 +64,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       CircleAvatar(
                         radius: 35,
-                        backgroundColor: Colors.white,
+                        // Gunakan warna surface/background yang kontras dengan latar belakang
+                        backgroundColor: isDarkMode ? GogemColors.darkGrey : Colors.white,
                         backgroundImage: photoUrl != null
                             ? NetworkImage(photoUrl)
                             : const AssetImage('assets/images/default_user.png')
-                        as ImageProvider,
+                                as ImageProvider,
                       ),
                       const SizedBox(width: 16),
                       Column(
@@ -63,8 +77,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Text(
                             displayName.toUpperCase(),
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              // Teks pada header image biasanya tetap putih/terang agar kontras
+                              color: Colors.white, 
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                               letterSpacing: 1.2,
@@ -72,8 +87,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Text(
                             email,
-                            style: const TextStyle(
-                              color: Colors.white70,
+                            style: TextStyle(
+                              // Teks sekunder juga tetap terang
+                              color: Colors.white70, 
                               fontSize: 14,
                             ),
                           ),
@@ -92,9 +108,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.help_outline,
               title: 'Pusat Bantuan',
               subtitle: 'Lihat alamat email anda',
-              onTap: () {},
+              // Tambahkan penyesuaian warna ikon/teks jika ProfileMenuItem tidak menggunakan tema
+              // Misalnya: iconColor: textColor,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FaqScreen(),
+                  ),
+                );
+              },
             ),
-            const Divider(),
+            const Divider(color: Colors.grey), // Gunakan Divider yang adaptif (opsional)
 
             ProfileMenuItem(
               icon: Icons.palette_outlined,
@@ -102,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               subtitle: 'Ubah tema aplikasi',
               onTap: () {},
             ),
-            const Divider(),
+            const Divider(color: Colors.grey),
 
             ProfileMenuItem(
               icon: Icons.language_outlined,
@@ -110,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               subtitle: 'Ubah bahasa',
               onTap: () {},
             ),
-            const Divider(),
+            const Divider(color: Colors.grey),
 
             ProfileMenuItem(
               icon: Icons.info_outline,
@@ -118,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               subtitle: 'Informasi Aplikasi GoGem',
               onTap: () {},
             ),
-            const Divider(),
+            const Divider(color: Colors.grey),
 
             ProfileMenuItem(
               icon: Icons.logout,
