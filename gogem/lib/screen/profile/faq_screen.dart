@@ -11,19 +11,19 @@ class FaqScreen extends StatelessWidget {
   final List<Map<String, String>> faqData = const [
     {
       'question': 'Apa itu Aplikasi GoGem?',
-      'answer': 'GoGem adalah aplikasi yang membantu Anda menemukan lokasi tambang atau sumber daya alam terdekat di sekitar Anda.',
+      'answer': 'GoGem adalah sebuah aplikasi virtual tour guide berbasis mobile yang dirancang untuk mengatasi kesulitan wisatawan dalam menemukan informasi wisata yang lengkap, terintegrasi, dan mudah diakses di Indonesia.',
     },
     {
       'question': 'Bagaimana cara mendaftar/login?',
-      'answer': 'Anda dapat mendaftar dengan email dan kata sandi, atau menggunakan akun Google/Facebook Anda di halaman Autentikasi.',
+      'answer': 'Berikut merupakan beberapa fitur utama dalam aplikasi GoGem :\n- Daftar Destinasi Wisata → menampilkan informasi wisata, kuliner, pusat oleh-oleh, hingga hidden gems.\n- Detail Destinasi → berisi foto, lokasi, rating, jam buka, dan deskripsi singkat.\n- Peta Interaktif → integrasi dengan Google Maps untuk navigasi dan rute perjalanan.\n- Wishlist & Review → wisatawan dapat menyimpan destinasi favorit serta berbagi ulasan.\n- Chatbot Asisten Wisata → didukung Gemini API untuk menjawab pertanyaan dan memberikan rekomendasi destinasi secara personal.',
     },
     {
-      'question': 'Apakah data lokasi yang ditampilkan akurat?',
-      'answer': 'Kami berusaha menampilkan data yang paling akurat dari sumber terpercaya, namun disarankan untuk memverifikasi ulang di lapangan.',
+      'question': 'Apakah Aplikasi GoGem ini bisa digunakan tanpa koneksi internet?',
+      'answer': 'Tidak, aplikasi GoGem tidak dapat berfungsi secara penuh tanpa koneksi internet',
     },
     {
-      'question': 'Bagaimana cara mengubah tema aplikasi?',
-      'answer': 'Anda bisa mengubah tema aplikasi melalui menu "Tema" di halaman profil.',
+      'question': 'Bagaimana cara mengunduh aplikasi ini?',
+      'answer': 'Anda dapat mengunduhnya melalui Google Play Store untuk perangkat Android dan App Store untuk perangkat iOS.',
     },
   ];
 
