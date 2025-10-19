@@ -9,7 +9,7 @@ import '../../data/model/destination_model.dart';
 import '../../provider/category/category_provider.dart';
 import '../card/destination_card.dart';
 import '../profile/profile_screen.dart';
-//import '../detail/destination_detail_screen.dart'; // <-- Tambahan provider kategori
+import '../detail/category_detail_screen.dart';
 
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
@@ -214,7 +214,7 @@ class _HomeContentState extends State<HomeContent> {
                     crossAxisCount: 4,
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
-                    childAspectRatio: 0.85,
+                  childAspectRatio: 0.85,
                   ),
                   itemCount:
                   categoryProvider.categories.length,
@@ -224,10 +224,22 @@ class _HomeContentState extends State<HomeContent> {
                     return _CategoryItem(
                       icon: _getCategoryIcon(kategori),
                       label: kategori,
+                      // **TAMBAHKAN LOGIKA NAVIGASI DI SINI**
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                          builder: (_) => CategoryDetailScreen(
+                            category: kategori, 
+                            destinations: destinations, 
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
-              ),
+        ),
 
               const SizedBox(height: 24),
 
@@ -422,31 +434,42 @@ IconData _getCategoryIcon(String kategori) {
 class _CategoryItem extends StatelessWidget {
   final IconData icon;
   final String label;
-  const _CategoryItem({required this.icon, required this.label});
+  // const _CategoryItem({required this.icon, required this.label});
+  final VoidCallback onTap;
+  
+  const _CategoryItem({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 56,
-          width: 56,
-          decoration: BoxDecoration(
-            color: Colors.blue.shade50,
-            borderRadius: BorderRadius.circular(14),
+    return GestureDetector( 
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Icon(icon, color: Colors.blueAccent, size: 30),
           ),
-          child: Icon(icon, color: Colors.blueAccent, size: 30),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
+          const SizedBox(height: 6),
+          Text(
+            label,
+            textAlign: TextAlign.center, 
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      ),
+    );;
   }
 }
 
