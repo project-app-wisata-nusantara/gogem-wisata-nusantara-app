@@ -18,13 +18,13 @@ class AboutScreen extends StatelessWidget {
     },
     {
       'name': 'Revina Chitra Sagita',
-      'role': 'Mobile Developer (Flutter)',
+      'role': 'BC25B082',
       'email': 'BC25B082@gogem.id',
       'photo': 'assets/images/team/team01.png',
     },
     {
       'name': 'M Mahfudl Awaludin',
-      'role': 'UI/UX Designer',
+      'role': 'BC25B093',
       'email': 'BC25B093@gogem.id',
       'photo': 'assets/images/team/team01.png',
     },
