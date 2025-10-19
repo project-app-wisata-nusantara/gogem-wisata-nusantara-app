@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../provider/profile/profile_provider.dart';
 import '../auth/auth_screen.dart';
 import '../../style/theme/gogem_theme.dart'; 
+import 'package:app_settings/app_settings.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -124,7 +125,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.palette_outlined,
               title: 'Tema',
               subtitle: 'Ubah tema aplikasi',
-              onTap: () {},
+              onTap: () {
+                AppSettings.openAppSettings(type: AppSettingsType.display);
+              },
             ),
             const Divider(color: Colors.grey),
 
@@ -132,7 +135,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.language_outlined,
               title: 'Bahasa',
               subtitle: 'Ubah bahasa',
-              onTap: () {},
+              onTap: () {
+                AppSettings.openAppSettings(type: AppSettingsType.display);
+              },
             ),
             const Divider(color: Colors.grey),
 
