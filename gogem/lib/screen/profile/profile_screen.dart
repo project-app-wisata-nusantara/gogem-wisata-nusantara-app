@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gogem/screen/profile/profile_menu_item.dart';
 import 'package:gogem/screen/profile/faq_screen.dart';
+import 'package:gogem/screen/profile/about_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/profile/profile_provider.dart';
@@ -145,7 +146,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.info_outline,
               title: 'Tentang Aplikasi',
               subtitle: 'Informasi Aplikasi GoGem',
-              onTap: () {}
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutScreen(),
+                  ),
+                );
+              }
             ),
             const Divider(color: Colors.grey),
 
