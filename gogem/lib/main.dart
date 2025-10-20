@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 ///import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:gogem/provider/category/category_provider.dart';
 import 'package:gogem/provider/detail/detail_provider.dart';
+import 'package:gogem/provider/favorite/favorite_provider.dart';
 import 'package:gogem/provider/gemini/gemini_provider.dart';
 import 'package:gogem/provider/map/map_provider.dart';
 import 'package:gogem/provider/profile/profile_provider.dart';
@@ -47,6 +48,7 @@ class GoGemApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => GeminiProvider()),
         ChangeNotifierProvider(create: (_) => DetailProvider()),
         ChangeNotifierProvider(create: (_) => RecommenderProvider()),
+        ChangeNotifierProvider(create: (_) => FavoriteProvider()),
       ],
       child: MaterialApp(
         title: 'GoGem',

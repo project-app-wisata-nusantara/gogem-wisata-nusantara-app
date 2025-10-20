@@ -1,4 +1,5 @@
 class Destination {
+  final String id;
   final String nama;
   final String kategori;
   final String kabupatenKota;
@@ -15,6 +16,7 @@ class Destination {
   bool isRecommended; // penanda apakah termasuk top rekomendasi
 
   Destination({
+    required this.id,
     required this.nama,
     required this.kategori,
     required this.kabupatenKota,
@@ -30,7 +32,13 @@ class Destination {
   });
 
   factory Destination.fromJson(Map<String, dynamic> json) {
+    final generatedId = '${json['nama']}_${json['kabupaten_kota']}'.replaceAll(
+      ' ',
+      '_',
+    );
+
     return Destination(
+      id: generatedId,
       nama: json['nama'] ?? '',
       kategori: json['kategori'] ?? '',
       kabupatenKota: json['kabupaten_kota'] ?? '',
@@ -49,6 +57,7 @@ class Destination {
   /// Factory untuk object kosong agar tidak menyebabkan crash
   factory Destination.empty() {
     return Destination(
+      id: 'empty',
       nama: '',
       kategori: '',
       kabupatenKota: '',
@@ -64,9 +73,44 @@ class Destination {
     );
   }
 
+  factory Destination.fromMap(Map<String, dynamic> map) {
+    return Destination(
+      id: map['id'],
+      nama: map['nama'],
+      kategori: map['kategori'],
+      kabupatenKota: map['kabupatenKota'],
+      rating: map['rating'],
+      preferensi: map['preferensi'],
+      linkLokasi: map['linkLokasi'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      linkGambar: map['linkGambar'],
+      deskripsi: map['deskripsi'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nama': nama,
+      'kategori': kategori,
+      'kabupatenKota': kabupatenKota,
+      'rating': rating,
+      'preferensi': preferensi,
+      'linkLokasi': linkLokasi,
+      'latitude': latitude,
+      'longitude': longitude,
+      'linkGambar': linkGambar,
+      'deskripsi': deskripsi,
+    };
+  }
+
+
+
   /// Untuk konversi balik ke JSON (kalau nanti kamu mau save/update)
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'nama': nama,
       'kategori': kategori,
       'kabupaten_kota': kabupatenKota,

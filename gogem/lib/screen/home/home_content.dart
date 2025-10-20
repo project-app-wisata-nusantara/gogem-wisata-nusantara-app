@@ -23,6 +23,7 @@ class _HomeContentState extends State<HomeContent> {
   List<Destination> destinations = [];
   bool isLoading = true;
 
+
   @override
   void initState() {
     super.initState();
