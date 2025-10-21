@@ -1,5 +1,5 @@
 # GoGem
-![download]()
+![download](https://github.com/project-app-wisata-nusantara/gogem-wisata-nusantara-app/blob/main/Assets/cover_gogem.jpg)
 ## Capstone Project BEKUP CREATE 2025
 
 BEKUP CREATE Capstone Group ID : : B25-PG005	<br>
@@ -11,22 +11,22 @@ Here is our repository for BEKUP CREATE Capstone project. Our team consist of 4 
 | :----------------------------: | :----------------: | :----------------------------------------------------------------------------------------------------------------------: |
 |  Setyadi Darmawan              | BC25B078           |            [LinkedIn]() or [GitHub]()             |
 |  Revina Chitra Sagita          | BC25B082           |                [LinkedIn]() or [GitHub]()                |
-|  M Mahfudl Awaludin            | BC25B093           |                [LinkedIn]() or [GitHub]()                |
+|  M Mahfudl Awaludin            | BC25B093           |                [LinkedIn](https://www.linkedin.com/in/mahfudlawaludin26/) or [GitHub](https://github.com/M-Mahfudl-Awaludin)                |
 |  Nur Afdlol Musyafa            | BC25B094           |              [LinkedIn]() or [GitHub]()               |
 
 
 ## Our Advisor 
 |              Advisor Name              | Advisor - ID |   Expertise        |                                                       Contact Link                                   |
 | :------------------------------------: | :----------: | :----------------: | :--------------------------------------------------------------------------------------------------: |
-| Muhammad Abdu Ar Rahman                |  DCD25-DB35  |   |            [Email]()             |
+| Muhammad Abdu Ar Rahman                |  DCD25-DB35  |   |            [Email](m.abduarrahman@gmail.com)             |
 
 ## About this project
 
     
 
 ## Documentation
-Project PLAN : [Link]() <br>
-Project Brief : [Link]() <br>
+Project PLAN : [Link](https://docs.google.com/document/d/1mo8R40rBgH9NtlQ8KoJ_5frWcPHzQ9h6LkDK7ujzkgc/edit?usp=sharing) <br>
+Project Brief : [Link](https://docs.google.com/document/d/1e4tq3YrvyFcY7ShWj-ZSPcwusBezRXKo76Quams2yt8/edit?usp=sharing) <br>
 Youtube Video Presentation : [Link]()
 
 ## System Architecture
@@ -41,11 +41,9 @@ Youtube Video Presentation : [Link]()
 |  Flutter-Dev   | [CC Branch]()      |
 |  Model ML  | [ML Branch]()       |
 
-## API Documentations
+## Model Machine Learning Documentations
 
-API Documentation Endpoint : <br>
-[Endpoint login recommend]() <br>
-[Endpoint click recommend]()
+ML Model : [Recommendation_Model]() 
 
 ## Datasets
 
@@ -63,6 +61,7 @@ Tourism Place : [link](https://www.kaggle.com/datasets/bertnardomariouskono/bali
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
 
 
 
