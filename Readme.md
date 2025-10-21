@@ -1,70 +1,115 @@
-# GoGem
-![download]()
-## Capstone Project BEKUP CREATE 2025
+# 🤖 GoGem Content-Based Recommender Model Documentation
 
-BEKUP CREATE Capstone Group ID : : B25-PG005	<br>
-Here is our repository for BEKUP CREATE Capstone project. Our team consist of 4 Multi-platform Flutter Dev.
+## 📊 Evaluasi Model
 
-## Our Warriors
+- **MAE (normalisasi)** : 0.0223  
+- **MAE (skala rating)** : 0.0892 (≈ 0.09 poin rating)  
+- **Perkiraan Akurasi** : 97.77%  
 
-|              Name              | Cohort-ID          |                                                       Contact Link                                                       |
-| :----------------------------: | :----------------: | :----------------------------------------------------------------------------------------------------------------------: |
-|  Setyadi Darmawan              | BC25B078           |            [LinkedIn]() or [GitHub]()             |
-|  Revina Chitra Sagita          | BC25B082           |                [LinkedIn]() or [GitHub]()                |
-|  M Mahfudl Awaludin            | BC25B093           |                [LinkedIn]() or [GitHub]()                |
-|  Nur Afdlol Musyafa            | BC25B094           |              [LinkedIn]() or [GitHub]()               |
+---
 
+## 🧠 Deskripsi Singkat
 
-## Our Advisor 
-|              Advisor Name              | Advisor - ID |   Expertise        |                                                       Contact Link                                   |
-| :------------------------------------: | :----------: | :----------------: | :--------------------------------------------------------------------------------------------------: |
-| Muhammad Abdu Ar Rahman                |  DCD25-DB35  |   |            [Email]()             |
+Model rekomendasi ini dikembangkan menggunakan pendekatan **Content-Based Filtering**, yang merekomendasikan destinasi wisata berdasarkan kesamaan konten seperti kategori wisata, lokasi, deskripsi, dan rating pengguna.
 
-## About this project
+Model ini merupakan bagian dari Capstone Project **GoGem – Discover Hidden Gems & Local Wonders**, yang menjadi fitur utama sistem rekomendasi personal di dalam aplikasi Flutter kami.
 
-    
+---
 
-## Documentation
-Project PLAN : [Link]() <br>
-Project Brief : [Link]() <br>
-Youtube Video Presentation : [Link]()
+## ⚙️ Arsitektur Model
 
-## System Architecture
+Model ini menggunakan pipeline sederhana berbasis analisis teks dan representasi vektor konten destinasi wisata. Langkah utamanya meliputi:
 
-![SystemArchitecture]()
+1. **Preprocessing data**  
+   Membersihkan data teks (nama destinasi, kategori, deskripsi) dan mengubahnya menjadi format numerik.
 
-## Repositories
+2. **Feature extraction (TF-IDF Vectorization)**  
+   Menggunakan *TF-IDF* untuk mengekstrak fitur dari deskripsi dan kategori destinasi wisata.
 
-|    Branch Name     |                                      Branch Link                                         |
-| :----------------: | :--------------------------------------------------------------------------------------: |
-| Main Branch | [MD Branch]() |
-|  Flutter-Dev   | [CC Branch]()      |
-|  Model ML  | [ML Branch]()       |
+3. **Similarity computation**  
+   Menghitung kesamaan antar destinasi menggunakan *cosine similarity*.
 
-## API Documentations
+4. **Ranking & recommendation**  
+   Sistem mengurutkan destinasi berdasarkan tingkat kesamaan dengan preferensi pengguna dan menampilkan 5–10 rekomendasi teratas.
 
-API Documentation Endpoint : <br>
-[Endpoint login recommend]() <br>
-[Endpoint click recommend]()
+---
 
-## Datasets
+## 🧩 Dataset
 
-Dataset Links of This Project :<br>
-Tourism Place : [link](https://www.kaggle.com/datasets/bertnardomariouskono/bali-tourist-attractions-dataset-from-google-maps/data) <br>
+Dataset yang digunakan mencakup:
 
+- Nama destinasi wisata  
+- Lokasi (kota/provinsi)  
+- Kategori (kuliner, alam, budaya, hidden gem, UMKM)  
+- Rating pengguna  
+- Deskripsi singkat  
 
+**Data dikumpulkan dari:**  
+- Portal resmi pariwisata Indonesia  
+- Google Maps (rating & ulasan)  
+- Open dataset publik (Kaggle dan sumber terbuka lainnya)
 
-## UI/UX Design
+---
 
-- Link Li-Fi Design : [Hi-Fi](https://www.figma.com/design/zIikQWANTz4YxxwgVrrjNN/GoGem---B25-PG005?node-id=0-1&t=M76Iehnx1xJiNmRa-1) <br>
-- Link Hi-Fi Design : [Hi-Fi](https://www.figma.com/design/zIikQWANTz4YxxwgVrrjNN/GoGem---B25-PG005?node-id=6-2&t=M76Iehnx1xJiNmRa-1) <br>
-- Link Demo Product : [Prototype]()
+## 🧮 Metodologi Pelatihan
 
-## Deployment Link APK 
+- **Metode:** Content-Based Filtering (TF-IDF + Cosine Similarity)  
+- **Framework:** Python (scikit-learn, pandas, numpy)
 
-Download Link APK  :<br>[]()
+**Langkah utama:**  
+1. Ekstraksi fitur teks menggunakan `TfidfVectorizer`  
+2. Perhitungan *cosine similarity matrix*  
+3. Evaluasi menggunakan subset validasi rating pengguna  
+4. Pengujian terhadap input pengguna berupa destinasi favorit atau deskripsi preferensi
 
+---
 
+## 📈 Hasil Evaluasi
 
+| Metrik | Nilai |
+|:-------|:------:|
+| MAE (normalisasi) | 0.0223 |
+| MAE (skala rating) | 0.0892 |
+| Akurasi estimasi preferensi | 97.77% |
 
+Model memberikan rekomendasi dengan error yang sangat rendah (≈ 0.09 poin dari skala rating), menandakan sistem dapat memprediksi kesesuaian destinasi dengan preferensi pengguna dengan baik.
 
+---
+
+## 🧠 Contoh Output Rekomendasi
+
+**Input pengguna:**  
+> “Saya suka tempat alam yang tenang dan punya pemandangan air terjun.”
+
+**Top 5 Rekomendasi:**  
+1. Air Terjun Gitgit – Bali  
+2. Curug Cimahi – Bandung  
+3. Coban Rondo – Malang  
+4. Tumpak Sewu – Lumajang  
+5. Lembah Harau – Sumatera Barat  
+
+---
+
+## 🔍 Visualisasi Kesamaan Konten
+
+Model menghasilkan matriks kesamaan (*similarity matrix*) yang divisualisasikan untuk menunjukkan tingkat kemiripan antar destinasi wisata. Setiap baris dan kolom mewakili destinasi, dengan warna intens menunjukkan tingkat kesamaan yang lebih tinggi.
+
+---
+
+## 🧩 Integrasi dengan Aplikasi Flutter
+
+Model ini diintegrasikan ke aplikasi Flutter **GoGem** melalui backend Firebase dan API internal:
+
+- Flutter memanggil API rekomendasi berdasarkan preferensi pengguna atau riwayat pencarian.  
+- Hasil rekomendasi dikirim kembali sebagai daftar destinasi dengan detail (nama, lokasi, gambar, dan jarak).  
+- Komponen UI menampilkan hasil dalam bentuk *Recommendation Card* interaktif.
+
+---
+
+## 🧰 Dependensi Teknis
+
+- Python 3.10+  
+- Pandas  
+- NumPy  
+- Scikit-learn  
+- Matplotlib (opsional, untuk visualisasi)
