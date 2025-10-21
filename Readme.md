@@ -37,8 +37,8 @@ Youtube Video Presentation : [Link]()
 
 |    Branch Name     |                                      Branch Link                                         |
 | :----------------: | :--------------------------------------------------------------------------------------: |
-| Main Branch | [MD Branch]() |
-|  Flutter-Dev   | [CC Branch]()      |
+| Main Branch | [Main Branch](https://github.com/project-app-wisata-nusantara/gogem-wisata-nusantara-app/tree/main) |
+|  Flutter-Dev   | [Flutter Branch]()      |
 |  Model ML  | [ML Branch](https://github.com/project-app-wisata-nusantara/gogem-wisata-nusantara-app/tree/ML_Branch)       |
 
 ## Model Machine Learning Documentations
@@ -61,6 +61,7 @@ Tourism Place : [link](https://www.kaggle.com/datasets/bertnardomariouskono/bali
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
 
 
 
