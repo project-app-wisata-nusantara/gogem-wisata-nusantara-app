@@ -56,12 +56,14 @@ Tourism Place : [link]() <br>
 
 ## UI/UX Design
 
-- Link Hi-Fi Design : [Hi-Fi]() <br>
+- Link Li-Fi Design : [Hi-Fi](https://www.figma.com/design/zIikQWANTz4YxxwgVrrjNN/GoGem---B25-PG005?node-id=0-1&t=M76Iehnx1xJiNmRa-1) <br>
+- Link Hi-Fi Design : [Hi-Fi](https://www.figma.com/design/zIikQWANTz4YxxwgVrrjNN/GoGem---B25-PG005?node-id=6-2&t=M76Iehnx1xJiNmRa-1) <br>
 - Link Demo Product : [Prototype]()
 
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
 
 
 
