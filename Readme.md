@@ -43,7 +43,7 @@ Youtube Video Presentation : [Link]()
 
 ## Model Machine Learning Documentations
 
-ML Model : [Recommendation_Model]() 
+ML Model : [Recommendation_Model](https://github.com/project-app-wisata-nusantara/gogem-wisata-nusantara-app/blob/ML_Branch/model/gogem_recommender.tflite) 
 
 ## Datasets
 
@@ -61,6 +61,7 @@ Tourism Place : [link](https://www.kaggle.com/datasets/bertnardomariouskono/bali
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
 
 
 
