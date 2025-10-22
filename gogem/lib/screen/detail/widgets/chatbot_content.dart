@@ -54,15 +54,15 @@ class _ChatbotContentState extends State<ChatbotContent> {
                 child: detailProvider.messages.isEmpty
                     ? _buildInitialInfo(detailProvider)
                     : ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: detailProvider.messages.length,
-                  itemBuilder: (context, index) {
-                    final message = detailProvider.messages[index];
-                    // Menggunakan ChatMessageBubble yang terpisah
-                    return ChatMessageBubble(message: message);
-                  },
-                ),
+                        controller: _scrollController,
+                        padding: const EdgeInsets.all(16.0),
+                        itemCount: detailProvider.messages.length,
+                        itemBuilder: (context, index) {
+                          final message = detailProvider.messages[index];
+                          // Menggunakan ChatMessageBubble yang terpisah
+                          return ChatMessageBubble(message: message);
+                        },
+                      ),
               ),
               // Menggunakan ChatbotInputField yang terpisah
               ChatbotInputField(
@@ -90,13 +90,17 @@ class _ChatbotContentState extends State<ChatbotContent> {
           child: Column(
             children: [
               CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.orange)),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+              ),
               SizedBox(height: 12),
-              Text('Memuat informasi chatbot...',
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black54,
-                      fontStyle: FontStyle.italic)),
+              Text(
+                'Memuat informasi chatbot...',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
             ],
           ),
         ),
@@ -120,30 +124,42 @@ class _ChatbotContentState extends State<ChatbotContent> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.info_outline, color: Colors.orange.shade700, size: 24),
+                Icon(
+                  Icons.info_outline,
+                  color: Colors.orange.shade700,
+                  size: 24,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     detailProvider.chatbotDescription ??
                         'Tanyakan informasi tentang ${widget.destination.nama}!',
                     style: TextStyle(
-                        fontSize: 14, color: Colors.grey[800], height: 1.5),
+                      fontSize: 14,
+                      color: Colors.grey[800],
+                      height: 1.5,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 24),
-          const Text('Contoh Pertanyaan:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text(
+            'Contoh Pertanyaan:',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 12),
           // Contoh pertanyaan (menggunakan widget helper jika perlu)
+          _buildQuestionChip(context, 'Berapa harga tiket masuknya?'),
           _buildQuestionChip(
-              context, 'Berapa harga tiket masuknya?'),
+            context,
+            'Apa saja fasilitas yang tersedia di sini?',
+          ),
           _buildQuestionChip(
-              context, 'Apa saja fasilitas yang tersedia di sini?'),
-          _buildQuestionChip(
-              context, 'Apa makanan khas di sekitar tempat wisata ini?'),
+            context,
+            'Apa makanan khas di sekitar tempat wisata ini?',
+          ),
         ],
       ),
     );
@@ -154,7 +170,10 @@ class _ChatbotContentState extends State<ChatbotContent> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: ActionChip(
-        label: Text(question, style: const TextStyle(fontSize: 13, color: Colors.blue)),
+        label: Text(
+          question,
+          style: const TextStyle(fontSize: 13, color: Colors.blue),
+        ),
         backgroundColor: Colors.blue.shade50,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

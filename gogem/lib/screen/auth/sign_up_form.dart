@@ -30,9 +30,10 @@ class _SignUpFormState extends State<SignUpForm>
       duration: const Duration(seconds: 3),
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0, end: 15).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 15,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -51,16 +52,16 @@ class _SignUpFormState extends State<SignUpForm>
     final confirm = _confirmController.text.trim();
 
     if (email.isEmpty || password.isEmpty || confirm.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Semua field wajib diisi")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Semua field wajib diisi")));
       return;
     }
 
     if (password != confirm) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Password tidak sama")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Password tidak sama")));
       return;
     }
 
@@ -76,9 +77,9 @@ class _SignUpFormState extends State<SignUpForm>
       }
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Sign up gagal: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Sign up gagal: $e")));
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -103,10 +104,7 @@ class _SignUpFormState extends State<SignUpForm>
                 child: child,
               );
             },
-            child: Image.asset(
-              "assets/images/board_auth.png",
-              height: 300,
-            ),
+            child: Image.asset("assets/images/board_auth.png", height: 300),
           ),
 
           const SizedBox(height: 24),
@@ -167,12 +165,12 @@ class _SignUpFormState extends State<SignUpForm>
               child: _loading
                   ? const CircularProgressIndicator(color: Colors.white)
                   : const Text(
-                "SIGN UP",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
+                      "SIGN UP",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
             ),
           ),
         ],

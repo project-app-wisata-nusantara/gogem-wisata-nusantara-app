@@ -86,8 +86,10 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                 top: 50,
                 right: 16,
                 child: IconButton(
-                  icon: Icon(isGrid ? Icons.list : Icons.grid_view,
-                      color: Colors.white),
+                  icon: Icon(
+                    isGrid ? Icons.list : Icons.grid_view,
+                    color: Colors.white,
+                  ),
                   onPressed: () => setState(() => isGrid = !isGrid),
                 ),
               ),
@@ -98,49 +100,49 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
           Expanded(
             child: widget.destinations.isEmpty
                 ? Center(
-              child: Text(
-                "Belum ada destinasi untuk kategori ini 😢",
-                style: theme.textTheme.titleMedium,
-              ),
-            )
+                    child: Text(
+                      "Belum ada destinasi untuk kategori ini 😢",
+                      style: theme.textTheme.titleMedium,
+                    ),
+                  )
                 : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: isGrid
-                  ? GridView.builder(
-                padding: const EdgeInsets.only(top: 8, bottom: 24),
-                gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 0.75,
-                ),
-                itemCount: widget.destinations.length,
-                itemBuilder: (context, index) {
-                  final dest = widget.destinations[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              DetailScreen(destination: dest),
-                        ),
-                      );
-                    },
-                    child: DestinationCard(destination: dest),
-                  );
-                },
-              )
-                  : ListView.builder(
-                padding: const EdgeInsets.only(top: 8, bottom: 24),
-                itemCount: widget.destinations.length,
-                itemBuilder: (context, index) {
-                  final dest = widget.destinations[index];
-                  return DestinationCardLarge(destination: dest);
-                },
-              ),
-            ),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: isGrid
+                        ? GridView.builder(
+                            padding: const EdgeInsets.only(top: 8, bottom: 24),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 12,
+                                  crossAxisSpacing: 12,
+                                  childAspectRatio: 0.75,
+                                ),
+                            itemCount: widget.destinations.length,
+                            itemBuilder: (context, index) {
+                              final dest = widget.destinations[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          DetailScreen(destination: dest),
+                                    ),
+                                  );
+                                },
+                                child: DestinationCard(destination: dest),
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.only(top: 8, bottom: 24),
+                            itemCount: widget.destinations.length,
+                            itemBuilder: (context, index) {
+                              final dest = widget.destinations[index];
+                              return DestinationCardLarge(destination: dest);
+                            },
+                          ),
+                  ),
           ),
         ],
       ),

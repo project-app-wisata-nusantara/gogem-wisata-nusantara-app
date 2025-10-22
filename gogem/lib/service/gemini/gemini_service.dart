@@ -18,7 +18,8 @@ class GeminiService {
   }) async {
     try {
       print('🔧 GeminiService: Preparing prompt for $destinationName');
-      final prompt = '''
+      final prompt =
+          '''
 Buatkan ringkasan singkat tentang destinasi wisata berikut:
 Nama: $destinationName
 Lokasi: $location
@@ -40,7 +41,7 @@ Format: Langsung tulis deskripsinya tanpa judul atau label tambahan.
       print('📥 Response received from Gemini API');
       final result = response.text ?? 'Tidak dapat menghasilkan ringkasan.';
       print('✨ Result length: ${result.length} characters');
-      
+
       return result;
     } catch (e) {
       print('💥 Error in GeminiService: $e');
@@ -54,7 +55,8 @@ Format: Langsung tulis deskripsinya tanpa judul atau label tambahan.
   }) async {
     try {
       print('🔧 GeminiService: Preparing chatbot info for $destinationName');
-      final prompt = '''
+      final prompt =
+          '''
 Buatkan deskripsi singkat (maksimal 50 kata) tentang destinasi wisata $destinationName di $location.
 
 Jelaskan bahwa pengguna dapat bertanya melalui chatbot tentang:
@@ -70,9 +72,10 @@ Format: Tulis dalam bahasa Indonesia yang ramah dan informatif, langsung ke inti
       final response = await _model.generateContent(content);
 
       print('📥 Chatbot info response received from Gemini API');
-      final result = response.text ?? 'Tanyakan informasi tentang $destinationName!';
+      final result =
+          response.text ?? 'Tanyakan informasi tentang $destinationName!';
       print('✨ Chatbot info length: ${result.length} characters');
-      
+
       return result;
     } catch (e) {
       print('💥 Error in GeminiService (chatbot info): $e');
@@ -83,13 +86,14 @@ Format: Tulis dalam bahasa Indonesia yang ramah dan informatif, langsung ke inti
   Future<String> generateChatResponse(String prompt) async {
     try {
       print('🔧 GeminiService: Generating chat response');
-      
+
       final content = [Content.text(prompt)];
       final response = await _model.generateContent(content);
 
       print('📥 Chat response received');
-      final result = response.text ?? 'Maaf, saya tidak dapat memproses permintaan Anda.';
-      
+      final result =
+          response.text ?? 'Maaf, saya tidak dapat memproses permintaan Anda.';
+
       return result;
     } catch (e) {
       print('💥 Error in GeminiService (chat response): $e');

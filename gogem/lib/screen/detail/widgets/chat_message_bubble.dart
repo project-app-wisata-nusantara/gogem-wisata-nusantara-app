@@ -1,7 +1,8 @@
 // lib/screens/detail/widgets/chat_message_bubble.dart
 
 import 'package:flutter/material.dart';
-import '../../../provider/detail/detail_provider.dart' show ChatMessage, MessageSender;
+import '../../../provider/detail/detail_provider.dart'
+    show ChatMessage, MessageSender;
 
 class ChatMessageBubble extends StatelessWidget {
   final ChatMessage message;
@@ -19,13 +20,15 @@ class ChatMessageBubble extends StatelessWidget {
       alignment: alignment,
       margin: const EdgeInsets.symmetric(vertical: 4.0),
       child: Column(
-        crossAxisAlignment:
-        isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isUser
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.all(12.0),
             constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.75),
+              maxWidth: MediaQuery.of(context).size.width * 0.75,
+            ),
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.only(
@@ -37,12 +40,12 @@ class ChatMessageBubble extends StatelessWidget {
               boxShadow: isUser
                   ? null
                   : [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 2,
-                  offset: const Offset(1, 1),
-                ),
-              ],
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 2,
+                        offset: const Offset(1, 1),
+                      ),
+                    ],
             ),
             child: Text(
               message.text,

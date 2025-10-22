@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 
 class GogemTextStyles {
   // Base Styles
-  static const TextStyle _openSans = TextStyle(
-    fontFamily: 'OpenSans',
-  );
+  static const TextStyle _openSans = TextStyle(fontFamily: 'OpenSans');
 
-  static const TextStyle _roboto = TextStyle(
-    fontFamily: 'Roboto',
-  );
+  static const TextStyle _roboto = TextStyle(fontFamily: 'Roboto');
 
   /// Display (Judul besar) pakai OpenSans
   static TextStyle displayLarge = _openSans.copyWith(

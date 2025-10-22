@@ -28,8 +28,10 @@ class _RekomendasiPageState extends State<RekomendasiPage>
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
-    _fadeAnimation =
-        CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
 
     _loadRecommendations();
   }
@@ -39,8 +41,10 @@ class _RekomendasiPageState extends State<RekomendasiPage>
       // Delay kecil supaya animasi lebih smooth
       await Future.delayed(const Duration(milliseconds: 500));
 
-      final recommender =
-      Provider.of<RecommenderProvider>(context, listen: false);
+      final recommender = Provider.of<RecommenderProvider>(
+        context,
+        listen: false,
+      );
 
       // Tunggu sampai recommender selesai load
       if (recommender.isLoading) {
@@ -142,17 +146,21 @@ class _RekomendasiPageState extends State<RekomendasiPage>
             child: _isLoading
                 ? _buildLoadingEffect()
                 : FadeTransition(
-              opacity: _fadeAnimation,
-              child: ListView.builder(
-                padding: const EdgeInsets.only(
-                    top: 8, left: 12, right: 12, bottom: 24),
-                itemCount: _recommendations.length,
-                itemBuilder: (context, index) {
-                  final dest = _recommendations[index];
-                  return DestinationCardLarge(destination: dest);
-                },
-              ),
-            ),
+                    opacity: _fadeAnimation,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(
+                        top: 8,
+                        left: 12,
+                        right: 12,
+                        bottom: 24,
+                      ),
+                      itemCount: _recommendations.length,
+                      itemBuilder: (context, index) {
+                        final dest = _recommendations[index];
+                        return DestinationCardLarge(destination: dest);
+                      },
+                    ),
+                  ),
           ),
         ],
       ),

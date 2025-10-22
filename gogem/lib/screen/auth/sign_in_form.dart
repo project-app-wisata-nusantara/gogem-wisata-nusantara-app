@@ -29,9 +29,10 @@ class _SignInFormState extends State<SignInForm>
       duration: const Duration(seconds: 3),
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0, end: 15).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 15,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -67,9 +68,9 @@ class _SignInFormState extends State<SignInForm>
       }
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Login gagal: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Login gagal: $e")));
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -90,9 +91,9 @@ class _SignInFormState extends State<SignInForm>
       }
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Google Sign In gagal: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Google Sign In gagal: $e")));
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -117,10 +118,7 @@ class _SignInFormState extends State<SignInForm>
                 child: child,
               );
             },
-            child: Image.asset(
-              "assets/images/board_auth.png",
-              height: 300,
-            ),
+            child: Image.asset("assets/images/board_auth.png", height: 300),
           ),
 
           const SizedBox(height: 24),
@@ -167,12 +165,12 @@ class _SignInFormState extends State<SignInForm>
               child: _loading
                   ? const CircularProgressIndicator(color: Colors.white)
                   : const Text(
-                "SIGN IN",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
+                      "SIGN IN",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
             ),
           ),
           const SizedBox(height: 16),

@@ -11,7 +11,6 @@ import '../../provider/detail/detail_provider.dart' show DetailProvider;
 import '../../provider/gemini/gemini_provider.dart';
 import '../../provider/map/map_provider.dart';
 
-
 class DetailScreen extends StatefulWidget {
   final Destination destination;
 
@@ -24,14 +23,15 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   bool _hasTriedToGenerate = false;
 
-
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAndGenerateSummary();
-      final detailProvider = Provider.of<DetailProvider>(context, listen: false);
+      final detailProvider = Provider.of<DetailProvider>(
+        context,
+        listen: false,
+      );
       detailProvider.setDestinationContext(
         widget.destination.nama,
         widget.destination.kabupatenKota,
@@ -53,7 +53,10 @@ class _DetailScreenState extends State<DetailScreen> {
     if (oldWidget.destination != widget.destination) {
       _hasTriedToGenerate = false;
 
-      final detailProvider = Provider.of<DetailProvider>(context, listen: false);
+      final detailProvider = Provider.of<DetailProvider>(
+        context,
+        listen: false,
+      );
       detailProvider.resetState();
 
       _checkAndGenerateSummary();
@@ -69,12 +72,16 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   void _checkAndGenerateSummary() {
-    final hasOriginalDescription = widget.destination.deskripsi != null &&
+    final hasOriginalDescription =
+        widget.destination.deskripsi != null &&
         widget.destination.deskripsi!.trim().isNotEmpty;
 
     if (!hasOriginalDescription && !_hasTriedToGenerate) {
       _hasTriedToGenerate = true;
-      final geminiProvider = Provider.of<GeminiProvider>(context, listen: false);
+      final geminiProvider = Provider.of<GeminiProvider>(
+        context,
+        listen: false,
+      );
 
       geminiProvider.clearSummary();
 

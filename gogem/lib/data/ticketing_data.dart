@@ -17,7 +17,8 @@ class TicketingData {
     TicketPlatform(
       name: 'Traveloka',
       url: 'https://www.traveloka.com/id-id/activities',
-      description: 'Platform lengkap untuk booking tiket wisata, hotel, dan transportasi',
+      description:
+          'Platform lengkap untuk booking tiket wisata, hotel, dan transportasi',
       features: [
         'Berbagai pilihan destinasi wisata',
         'Promo dan diskon menarik',
@@ -39,7 +40,8 @@ class TicketingData {
     TicketPlatform(
       name: 'Klook',
       url: 'https://www.klook.com/id/',
-      description: 'Platform booking aktivitas dan atraksi wisata internasional dan lokal',
+      description:
+          'Platform booking aktivitas dan atraksi wisata internasional dan lokal',
       features: [
         'E-voucher langsung',
         'Refund mudah',
@@ -83,21 +85,23 @@ class TicketingData {
   ];
 
   static String getRecommendationText() {
-    String result = 'Berikut rekomendasi platform untuk membeli tiket wisata:\n\n';
-    
+    String result =
+        'Berikut rekomendasi platform untuk membeli tiket wisata:\n\n';
+
     for (int i = 0; i < platforms.length; i++) {
       final platform = platforms[i];
       result += '${i + 1}. ${platform.name}\n';
       result += '   ${platform.description}\n';
       result += '   Link: ${platform.url}\n';
-      
+
       if (i < platforms.length - 1) {
         result += '\n';
       }
     }
-    
-    result += '\n💡 Tips: Bandingkan harga di beberapa platform untuk mendapatkan deal terbaik!';
-    
+
+    result +=
+        '\n💡 Tips: Bandingkan harga di beberapa platform untuk mendapatkan deal terbaik!';
+
     return result;
   }
 

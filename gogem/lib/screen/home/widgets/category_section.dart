@@ -13,46 +13,51 @@ class CategorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final categoryProvider = context.watch<CategoryProvider>();
     final destinationProvider = context.watch<DestinationProvider>();
-    final theme = Theme.of(context);
+    Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: categoryProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          childAspectRatio: 0.85,
-        ),
-        itemCount: categoryProvider.categories.length,
-        itemBuilder: (context, index) {
-          final kategori = categoryProvider.categories[index];
-          return _CategoryItem(
-            icon: _getCategoryIcon(kategori),
-            label: kategori,
-            onTap: () {
-              // Ambil destinasi sesuai kategori
-              final List<Destination> filtered = destinationProvider.destinations
-                  .where((d) => d.kategori.toLowerCase() == kategori.toLowerCase())
-                  .toList();
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 12,
+                childAspectRatio: 0.85,
+              ),
+              itemCount: categoryProvider.categories.length,
+              itemBuilder: (context, index) {
+                final kategori = categoryProvider.categories[index];
+                return _CategoryItem(
+                  icon: _getCategoryIcon(kategori),
+                  label: kategori,
+                  onTap: () {
+                    // Ambil destinasi sesuai kategori
+                    final List<Destination> filtered = destinationProvider
+                        .destinations
+                        .where(
+                          (d) =>
+                              d.kategori.toLowerCase() ==
+                              kategori.toLowerCase(),
+                        )
+                        .toList();
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => CategoryDetailScreen(
-                    kategori: kategori,
-                    destinations: filtered,
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      ),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => CategoryDetailScreen(
+                          kategori: kategori,
+                          destinations: filtered,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
     );
   }
 }
@@ -78,7 +83,6 @@ class _CategoryItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const _CategoryItem({
-    super.key,
     required this.icon,
     required this.label,
     required this.onTap,
@@ -101,13 +105,13 @@ class _CategoryItem extends StatelessWidget {
               gradient: LinearGradient(
                 colors: Theme.of(context).brightness == Brightness.dark
                     ? [
-                  GogemColors.secondary.withValues(alpha: 0.6),
-                  GogemColors.accent.withValues(alpha: 0.7),
-                ]
+                        GogemColors.secondary.withValues(alpha: 0.6),
+                        GogemColors.accent.withValues(alpha: 0.7),
+                      ]
                     : [
-                  GogemColors.primary.withValues(alpha: 0.85),
-                  GogemColors.secondary.withValues(alpha: 0.85),
-                ],
+                        GogemColors.primary.withValues(alpha: 0.85),
+                        GogemColors.secondary.withValues(alpha: 0.85),
+                      ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),

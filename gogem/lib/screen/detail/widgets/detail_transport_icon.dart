@@ -4,7 +4,11 @@ class DetailTransportIcon extends StatelessWidget {
   final IconData icon;
   final String label;
 
-  const DetailTransportIcon({super.key, required this.icon, required this.label});
+  const DetailTransportIcon({
+    super.key,
+    required this.icon,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +16,7 @@ class DetailTransportIcon extends StatelessWidget {
       children: [
         CircleAvatar(
           backgroundColor: Colors.orange.shade100,
-          child: Icon(
-            icon,
-            color: Colors.orange,
-            size: 24,
-          ),
+          child: Icon(icon, color: Colors.orange, size: 24),
         ),
         const SizedBox(height: 8),
         Text(

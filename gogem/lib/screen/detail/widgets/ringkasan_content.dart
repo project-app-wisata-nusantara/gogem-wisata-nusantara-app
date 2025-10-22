@@ -43,7 +43,8 @@ class RingkasanContent extends StatelessWidget {
   Widget _buildDescriptionSection() {
     return Consumer<GeminiProvider>(
       builder: (context, geminiProvider, child) {
-        final bool hasOriginalDescription = destination.deskripsi != null &&
+        final bool hasOriginalDescription =
+            destination.deskripsi != null &&
             destination.deskripsi!.trim().isNotEmpty;
         final String displayDescription = hasOriginalDescription
             ? destination.deskripsi!
@@ -56,13 +57,17 @@ class RingkasanContent extends StatelessWidget {
               child: Column(
                 children: [
                   CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.orange)),
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+                  ),
                   SizedBox(height: 12),
-                  Text('Memuat ringkasan...',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black54,
-                          fontStyle: FontStyle.italic)),
+                  Text(
+                    'Memuat ringkasan...',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -73,8 +78,10 @@ class RingkasanContent extends StatelessWidget {
           return Center(
             child: Column(
               children: [
-                Text('Gagal memuat ringkasan',
-                    style: TextStyle(fontSize: 14, color: Colors.red[700])),
+                Text(
+                  'Gagal memuat ringkasan',
+                  style: TextStyle(fontSize: 14, color: Colors.red[700]),
+                ),
                 const SizedBox(height: 8),
                 TextButton.icon(
                   onPressed: () {
@@ -94,8 +101,10 @@ class RingkasanContent extends StatelessWidget {
 
         if (displayDescription.isEmpty) {
           return const Center(
-            child: Text('Tidak ada deskripsi tersedia.',
-                style: TextStyle(fontSize: 14, color: Colors.black54)),
+            child: Text(
+              'Tidak ada deskripsi tersedia.',
+              style: TextStyle(fontSize: 14, color: Colors.black54),
+            ),
           );
         }
 
@@ -108,9 +117,14 @@ class RingkasanContent extends StatelessWidget {
                 Text(
                   displayDescription,
                   style: const TextStyle(
-                      fontSize: 14, color: Colors.black87, height: 1.5),
+                    fontSize: 14,
+                    color: Colors.black87,
+                    height: 1.5,
+                  ),
                   maxLines: isExpanded ? null : _maxLines,
-                  overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                  overflow: isExpanded
+                      ? TextOverflow.visible
+                      : TextOverflow.ellipsis,
                 ),
                 if (_needsReadMore(context, displayDescription, isExpanded))
                   Align(
@@ -118,17 +132,21 @@ class RingkasanContent extends StatelessWidget {
                     child: TextButton(
                       onPressed: detailProvider.toggleExpanded,
                       style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4)),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             isExpanded ? 'Sembunyikan' : 'Selengkapnya',
                             style: const TextStyle(
-                                color: Colors.orange,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13),
+                              color: Colors.orange,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
                           ),
                           Icon(
                             isExpanded
@@ -169,8 +187,10 @@ class RingkasanContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Jarak',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const Text(
+          'Jarak',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -205,8 +225,10 @@ class RingkasanContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Lokasi map',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const Text(
+          'Lokasi map',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 16),
         Container(
           height: 300,
@@ -242,8 +264,9 @@ class RingkasanContent extends StatelessWidget {
                             onTap: openMap,
                           ),
                         ),
-                        ...mapProvider.markers
-                            .where((m) => m.markerId.value != destination.nama),
+                        ...mapProvider.markers.where(
+                          (m) => m.markerId.value != destination.nama,
+                        ),
                       },
                       zoomControlsEnabled: false,
                       myLocationButtonEnabled: false,
@@ -274,13 +297,16 @@ class RingkasanContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Rekomendasi Wisata Serupa',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const Text(
+          'Rekomendasi Wisata Serupa',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 12),
         Consumer<RecommenderProvider>(
           builder: (context, recommenderProvider, _) {
-            final similar =
-            recommenderProvider.getSimilarRecommendations(destination);
+            final similar = recommenderProvider.getSimilarRecommendations(
+              destination,
+            );
 
             if (similar.isEmpty) {
               return const Center(

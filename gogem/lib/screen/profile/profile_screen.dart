@@ -20,8 +20,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<ProfileProvider>(context, listen: false).loadUserData());
+    Future.microtask(
+      () => Provider.of<ProfileProvider>(context, listen: false).loadUserData(),
+    );
   }
 
   @override
@@ -35,8 +36,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Menggunakan latar belakang dari tema, bukan hardcode
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final Color textColor = Theme.of(context).colorScheme.onBackground;
-    final Color lightTextColor = textColor.withOpacity(0.7); // Warna teks sekunder
-    final Color dividerColor = Theme.of(context).dividerColor;
+    textColor.withOpacity(
+      0.7,
+    ); // Warna teks sekunder
     // Latar belakang Scaffold sudah diatur di GogemTheme.scaffoldBackgroundColor
 
     return Scaffold(
@@ -66,11 +68,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       CircleAvatar(
                         radius: 35,
                         // Gunakan warna surface/background yang kontras dengan latar belakang
-                        backgroundColor: isDarkMode ? GogemColors.darkGrey : Colors.white,
+                        backgroundColor: isDarkMode
+                            ? GogemColors.darkGrey
+                            : Colors.white,
                         backgroundImage: photoUrl != null
                             ? NetworkImage(photoUrl)
                             : const AssetImage('assets/images/default_user.png')
-                        as ImageProvider,
+                                  as ImageProvider,
                       ),
                       const SizedBox(width: 16),
                       Column(
@@ -114,13 +118,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const FaqScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const FaqScreen()),
                 );
               },
             ),
-            const Divider(color: Colors.grey), // Gunakan Divider yang adaptif (opsional)
+            const Divider(
+              color: Colors.grey,
+            ), // Gunakan Divider yang adaptif (opsional)
 
             ProfileMenuItem(
               icon: Icons.palette_outlined,
@@ -143,17 +147,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const Divider(color: Colors.grey),
 
             ProfileMenuItem(
-                icon: Icons.info_outline,
-                title: 'Tentang Aplikasi',
-                subtitle: 'Informasi Aplikasi GoGem',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AboutScreen(),
-                    ),
-                  );
-                }
+              icon: Icons.info_outline,
+              title: 'Tentang Aplikasi',
+              subtitle: 'Informasi Aplikasi GoGem',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AboutScreen()),
+                );
+              },
             ),
             const Divider(color: Colors.grey),
 
@@ -166,10 +168,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 if (context.mounted) {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => const AuthScreen(),
-                    ),
-                        (route) => false,
+                    MaterialPageRoute(builder: (_) => const AuthScreen()),
+                    (route) => false,
                   );
                 }
               },

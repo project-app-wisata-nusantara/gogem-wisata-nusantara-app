@@ -19,7 +19,6 @@ import 'package:gogem/style/typography/gogem_text_styles.dart';
 import 'package:gogem/style/theme/gogem_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
 
@@ -37,21 +36,29 @@ class _HomeContentState extends State<HomeContent> {
     _loadDestinations();
 
     // provider kategori
-    Future.microtask(() =>
-        Provider.of<CategoryProvider>(context, listen: false).loadCategories());
+    Future.microtask(
+      () => Provider.of<CategoryProvider>(
+        context,
+        listen: false,
+      ).loadCategories(),
+    );
 
     // recommender model
-    Future.microtask(() =>
-        Provider.of<RecommenderProvider>(context, listen: false).initialize());
+    Future.microtask(
+      () =>
+          Provider.of<RecommenderProvider>(context, listen: false).initialize(),
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showWelcomeDialogOnce();
     });
 
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
   }
 
   Future<void> _showWelcomeDialogOnce() async {
@@ -65,11 +72,13 @@ class _HomeContentState extends State<HomeContent> {
   }
 
   Future<void> _loadDestinations() async {
-    final String jsonString =
-    await rootBundle.loadString('assets/data/dataset.json');
+    final String jsonString = await rootBundle.loadString(
+      'assets/data/dataset.json',
+    );
     final List<dynamic> jsonData = json.decode(jsonString);
-    final List<Destination> loadedDestinations =
-    jsonData.map((e) => Destination.fromJson(e)).toList();
+    final List<Destination> loadedDestinations = jsonData
+        .map((e) => Destination.fromJson(e))
+        .toList();
 
     setState(() {
       destinations = loadedDestinations;
@@ -93,291 +102,324 @@ class _HomeContentState extends State<HomeContent> {
         : populer.take(3).toList();
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: const SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
-    ),
-    child: Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: theme.colorScheme.surface,
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ===== HEADER =====
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 200,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          GogemColors.primary,
-                          GogemColors.secondary,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/bg_header.png'),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                        opacity: 0.15,
-                      ),
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(26),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: theme.colorScheme.surface,
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : SafeArea(
+                top: false,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ===== HEADER =====
+                      Stack(
+                        clipBehavior: Clip.none,
                         children: [
-                          // === USER INFO TEXT ===
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                user?.email ?? 'User',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: GogemColors.white.withValues(alpha: 0.9),
-                                ),
+                          Container(
+                            width: double.infinity,
+                            height: 200,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  GogemColors.primary,
+                                  GogemColors.secondary,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                              const SizedBox(height: 6),
-                              Text(
-                                "Welcome GoGem",
-                                style: theme.textTheme.headlineLarge?.copyWith(
-                                  color: GogemColors.white,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5,
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/bg_header.png',
                                 ),
+                                fit: BoxFit.cover,
+                                alignment: Alignment.topCenter,
+                                opacity: 0.15,
                               ),
-                              const SizedBox(height: 6),
-                              Text(
-                                "Discover hidden gems & local wonders",
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: GogemColors.white.withValues(alpha: 0.85),
-                                  fontSize: 15,
-                                  height: 1.3,
-                                ),
+                              borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(26),
                               ),
-                            ],
-                          ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // === USER INFO TEXT ===
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        user?.email ?? 'User',
+                                        style: theme.textTheme.bodyMedium
+                                            ?.copyWith(
+                                              color: GogemColors.white
+                                                  .withValues(alpha: 0.9),
+                                            ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        "Welcome GoGem",
+                                        style: theme.textTheme.headlineLarge
+                                            ?.copyWith(
+                                              color: GogemColors.white,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 0.5,
+                                            ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        "Discover hidden gems & local wonders",
+                                        style: theme.textTheme.bodyMedium
+                                            ?.copyWith(
+                                              color: GogemColors.white
+                                                  .withValues(alpha: 0.85),
+                                              fontSize: 15,
+                                              height: 1.3,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
 
-                          // === PROFILE BUTTON MODERN ===
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const ProfileScreen(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    GogemColors.accent,
-                                    GogemColors.secondary,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: GogemColors.darkGrey.withValues(alpha: 0.25),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 3),
+                                  // === PROFILE BUTTON MODERN ===
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => const ProfileScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            GogemColors.accent,
+                                            GogemColors.secondary,
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: GogemColors.darkGrey
+                                                .withValues(alpha: 0.25),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ),
+                                      padding: const EdgeInsets.all(10),
+                                      child: const Icon(
+                                        Icons.person_rounded,
+                                        color: GogemColors.white,
+                                        size: 26,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                              padding: const EdgeInsets.all(10),
-                              child: const Icon(
-                                Icons.person_rounded,
-                                color: GogemColors.white,
-                                size: 26,
+                            ),
+                          ),
+
+                          // ==== SEARCH BAR FLOATING ====
+                          Positioned(
+                            bottom: -25,
+                            left: 20,
+                            right: 20,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const SearchScreen(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: GogemColors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: GogemColors.darkGrey.withValues(
+                                        alpha: 0.2,
+                                      ),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.search_rounded,
+                                      color: GogemColors.darkGrey,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Cari destinasi...',
+                                      style: theme.textTheme.bodyMedium
+                                          ?.copyWith(
+                                            color: GogemColors.darkGrey
+                                                .withValues(alpha: 0.6),
+                                          ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ),
+                      const SizedBox(height: 5),
+                      // ===== KATEGORI =====
+                      const CategorySection(),
 
-                  // ==== SEARCH BAR FLOATING ====
-                  Positioned(
-                    bottom: -25,
-                    left: 20,
-                    right: 20,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const SearchScreen()),
-                        );
-                      },
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: GogemColors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: GogemColors.darkGrey.withValues(alpha: 0.2),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.search_rounded, color: GogemColors.darkGrey),
-                            const SizedBox(width: 8),
-                            Text(
-                              'Cari destinasi...',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: GogemColors.darkGrey.withValues(alpha: 0.6),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              // ===== KATEGORI =====
-              const CategorySection(),
+                      const SizedBox(height: 5),
+                      // ===== SLIDER DESTINASI =====
+                      HomeCarousel(),
+                      const SizedBox(height: 5),
 
-              const SizedBox(height: 5),
-              // ===== SLIDER DESTINASI =====
-              HomeCarousel(),
-              const SizedBox(height: 5),
-
-              // ===== POPULER =====
-              SectionTitle(
-                title: "Populer",
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const PopulerPage()),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 240,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(left: 16),
-                  itemCount: populer.length > 5 ? 5 : populer.length,
-                  itemBuilder: (context, index) {
-                    final dest = populer[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => DetailScreen(destination: dest),
-                          ),
-                        );
-                      },
-                      child: DestinationCard(destination: dest),
-                    );
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // ===== NEW HITS =====
-              SectionTitle(
-                title: "New Hits",
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const NewHitsPage()),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 240,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(left: 16),
-                  itemCount: newHits.length,
-                  itemBuilder: (context, index) {
-                    final dest = newHits[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => DetailScreen(destination: dest),
-                          ),
-                        );
-                      },
-                      child: DestinationCard(destination: dest),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 12),
-              // ===== REKOMENDASI MODEL =====
-              if (!recommender.isLoading) ...[
-                SectionTitle(
-                  title: "Rekomendasi Untukmu ✨",
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const RekomendasiPage()),
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 240,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.only(left: 16),
-                    itemCount: recommender.getTopRecommendations(topN: 10).length,
-                    itemBuilder: (context, index) {
-                      final dest = recommender.getTopRecommendations(topN: 10)[index];
-                      return GestureDetector(
+                      // ===== POPULER =====
+                      SectionTitle(
+                        title: "Populer",
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => DetailScreen(destination: dest),
+                              builder: (_) => const PopulerPage(),
                             ),
                           );
                         },
-                        child: DestinationCard(destination: dest),
-                      );
-                    },
+                      ),
+                      SizedBox(
+                        height: 240,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.only(left: 16),
+                          itemCount: populer.length > 5 ? 5 : populer.length,
+                          itemBuilder: (context, index) {
+                            final dest = populer[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        DetailScreen(destination: dest),
+                                  ),
+                                );
+                              },
+                              child: DestinationCard(destination: dest),
+                            );
+                          },
+                        ),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      // ===== NEW HITS =====
+                      SectionTitle(
+                        title: "New Hits",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const NewHitsPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 240,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.only(left: 16),
+                          itemCount: newHits.length,
+                          itemBuilder: (context, index) {
+                            final dest = newHits[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        DetailScreen(destination: dest),
+                                  ),
+                                );
+                              },
+                              child: DestinationCard(destination: dest),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      // ===== REKOMENDASI MODEL =====
+                      if (!recommender.isLoading) ...[
+                        SectionTitle(
+                          title: "Rekomendasi Untukmu ✨",
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const RekomendasiPage(),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 240,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.only(left: 16),
+                            itemCount: recommender
+                                .getTopRecommendations(topN: 10)
+                                .length,
+                            itemBuilder: (context, index) {
+                              final dest = recommender.getTopRecommendations(
+                                topN: 10,
+                              )[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          DetailScreen(destination: dest),
+                                    ),
+                                  );
+                                },
+                                child: DestinationCard(destination: dest),
+                              );
+                            },
+                          ),
+                        ),
+                      ] else ...[
+                        const Center(child: CircularProgressIndicator()),
+                      ],
+
+                      const SizedBox(height: 5),
+                    ],
                   ),
                 ),
-              ] else ...[
-                const Center(child: CircularProgressIndicator()),
-              ],
-
-              const SizedBox(height: 5),
-
-            ],
-          ),
-        ),
+              ),
       ),
-    ),
     );
   }
 }
@@ -438,7 +480,10 @@ void _showWelcomeDialog(BuildContext context) {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 14,
+                  ),
                   elevation: 0,
                 ),
                 onPressed: () {

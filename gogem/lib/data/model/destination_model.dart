@@ -105,8 +105,6 @@ class Destination {
     };
   }
 
-
-
   /// Untuk konversi balik ke JSON (kalau nanti kamu mau save/update)
   Map<String, dynamic> toJson() {
     return {

@@ -30,10 +30,19 @@ class HomeScreen extends StatelessWidget {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: "Home"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: "Home",
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.map_rounded), label: "Maps"),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_rounded), label: "Favorit"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: "Profil"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_rounded),
+            label: "Favorit",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_rounded),
+            label: "Profil",
+          ),
         ],
       ),
     );

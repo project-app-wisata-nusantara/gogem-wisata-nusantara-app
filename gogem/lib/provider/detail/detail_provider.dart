@@ -68,7 +68,8 @@ class DetailProvider with ChangeNotifier {
 
   // Set context destinasi untuk chatbot
   void setDestinationContext(String destinationName, String location) {
-    _currentDestinationContext = '''
+    _currentDestinationContext =
+        '''
 Konteks: Saya adalah asisten untuk destinasi wisata "$destinationName" di $location.
 Saya dapat membantu menjawab pertanyaan tentang:
 1. Rekomendasi web/aplikasi untuk membeli tiket
@@ -104,7 +105,7 @@ Jawab dengan singkat, jelas, dan informatif dalam bahasa Indonesia.
     } catch (e) {
       print('❌ DetailProvider: Error generating chatbot info: $e');
       _chatbotDescription =
-      'Tanyakan informasi tentang $destinationName seperti rekomendasi tiket, estimasi perjalanan, atau jadwal operasional!';
+          'Tanyakan informasi tentang $destinationName seperti rekomendasi tiket, estimasi perjalanan, atau jadwal operasional!';
       _isGeneratingChatbotInfo = false;
       notifyListeners();
     }
@@ -137,19 +138,25 @@ Jawab dengan singkat, jelas, dan informatif dalam bahasa Indonesia.
     if (userMessage.trim().isEmpty) return;
 
     // 1. Tambahkan pesan user
-    _messages.add(ChatMessage(
-      text: userMessage,
-      sender: MessageSender.user, // Menggunakan MessageSender.user
-      timestamp: DateTime.now(),
-    ));
+    _messages.add(
+      ChatMessage(
+        text: userMessage,
+        sender: MessageSender.user, // Menggunakan MessageSender.user
+        timestamp: DateTime.now(),
+      ),
+    );
 
     // 2. Tambahkan pesan loading sebagai placeholder dari bot
-    _messages.add(ChatMessage(
-      text: '',
-      sender: MessageSender.other, // Placeholder dari bot
-      timestamp: DateTime.now().add(const Duration(milliseconds: 1)), // Pastikan urutannya setelah pesan user
-      isLoading: true, // Set true untuk menampilkan indicator
-    ));
+    _messages.add(
+      ChatMessage(
+        text: '',
+        sender: MessageSender.other, // Placeholder dari bot
+        timestamp: DateTime.now().add(
+          const Duration(milliseconds: 1),
+        ), // Pastikan urutannya setelah pesan user
+        isLoading: true, // Set true untuk menampilkan indicator
+      ),
+    );
 
     _isSendingMessage = true;
     notifyListeners();
@@ -165,7 +172,8 @@ Jawab dengan singkat, jelas, dan informatif dalam bahasa Indonesia.
         response = TicketingData.getRecommendationText();
       } else {
         // Buat prompt dengan context destinasi untuk pertanyaan lainnya
-        final prompt = '''
+        final prompt =
+            '''
 $_currentDestinationContext
 
 Pertanyaan pengguna: $userMessage
@@ -180,11 +188,13 @@ Berikan jawaban yang membantu dan relevan. Jika tentang jadwal/jam operasional, 
       _messages.removeWhere((msg) => msg.isLoading == true);
 
       // 4. Tambahkan response dari bot
-      _messages.add(ChatMessage(
-        text: response,
-        sender: MessageSender.other, // Menggunakan MessageSender.other
-        timestamp: DateTime.now(),
-      ));
+      _messages.add(
+        ChatMessage(
+          text: response,
+          sender: MessageSender.other, // Menggunakan MessageSender.other
+          timestamp: DateTime.now(),
+        ),
+      );
 
       print('✅ Chatbot response received');
     } catch (e) {
@@ -194,11 +204,13 @@ Berikan jawaban yang membantu dan relevan. Jika tentang jadwal/jam operasional, 
       _messages.removeWhere((msg) => msg.isLoading == true);
 
       // Tambahkan error message
-      _messages.add(ChatMessage(
-        text: 'Maaf, terjadi kesalahan. Silakan coba lagi.',
-        sender: MessageSender.other,
-        timestamp: DateTime.now(),
-      ));
+      _messages.add(
+        ChatMessage(
+          text: 'Maaf, terjadi kesalahan. Silakan coba lagi.',
+          sender: MessageSender.other,
+          timestamp: DateTime.now(),
+        ),
+      );
     } finally {
       _isSendingMessage = false;
       notifyListeners();

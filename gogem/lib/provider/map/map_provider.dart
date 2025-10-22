@@ -4,7 +4,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../data/model/destination_model.dart';
 
-class MapProvider extends ChangeNotifier { // ⬅️ tambahkan ini
+class MapProvider extends ChangeNotifier {
+  // ⬅️ tambahkan ini
   final Set<Marker> _markers = {};
   List<Destination> _destinations = [];
 

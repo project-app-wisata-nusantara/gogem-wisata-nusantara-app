@@ -63,21 +63,21 @@ class AboutScreen extends StatelessWidget {
               const CircleAvatar(
                 radius: 40,
                 backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage('assets/logo/gogem-logo.png'), 
+                backgroundImage: AssetImage('assets/logo/gogem-logo.png'),
               ),
               const SizedBox(height: 16),
               Text(
                 'GoGem',
                 style: textTheme.headlineMedium!.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: colorScheme.onBackground,
+                  color: colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 'Virtual Tour Guide Nusantara',
                 style: textTheme.titleSmall!.copyWith(
-                  color: colorScheme.onBackground.withOpacity(0.7),
+                  color: colorScheme.onSurface.withAlpha(179),
                 ),
               ),
               const SizedBox(height: 24),
@@ -86,17 +86,17 @@ class AboutScreen extends StatelessWidget {
                 'GoGem adalah panduan wisata terintegrasi yang membantu Anda menemukan destinasi populer, kuliner khas, hingga *hidden gem* di seluruh Indonesia, didukung oleh data *real-time* dan teknologi AI (Gemini).',
                 textAlign: TextAlign.center,
                 style: textTheme.bodyLarge!.copyWith(
-                  color: colorScheme.onBackground,
+                  color: colorScheme.onSurface,
                   height: 1.5,
                 ),
               ),
               const SizedBox(height: 32),
-              
+
               Text(
                 'Versi Aplikasi: $appVersion',
                 style: textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: colorScheme.onBackground.withOpacity(0.8),
+                  color: colorScheme.onSurface.withAlpha(204),
                 ),
               ),
               const Divider(height: 32),
@@ -119,16 +119,15 @@ class AboutScreen extends StatelessWidget {
                   photoPath: member['photo']!,
                   onTap: () => _launchUrl('mailto:${member['email']}'),
                 );
-              }).toList(),
-              
-              const Divider(height: 32),
+              }),
 
+              const Divider(height: 32),
 
               Text(
                 '© 2024 GoGem - B25-PG005',
                 textAlign: TextAlign.center,
                 style: textTheme.bodySmall!.copyWith(
-                  color: colorScheme.onBackground.withOpacity(0.6),
+                  color: colorScheme.onSurface.withAlpha(153),
                 ),
               ),
             ],
@@ -153,7 +152,7 @@ class AboutScreen extends StatelessWidget {
       leading: CircleAvatar(
         radius: 24,
         backgroundImage: AssetImage(photoPath),
-        backgroundColor: colorScheme.primary.withOpacity(0.2),
+        backgroundColor: colorScheme.primary.withAlpha(51),
       ),
       title: Text(
         name,
@@ -165,45 +164,16 @@ class AboutScreen extends StatelessWidget {
       subtitle: Text(
         role,
         style: textTheme.bodyMedium!.copyWith(
-          color: colorScheme.onSurface.withOpacity(0.7),
+          color: colorScheme.onSurface.withAlpha(179),
         ),
       ),
       trailing: IconButton(
         icon: Icon(Icons.email, color: colorScheme.secondary),
         onPressed: onTap,
       ),
-      onTap: onTap, 
+      onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
     );
   }
 
-  Widget _buildAboutTile(
-    BuildContext context, {
-    required String title,
-    required IconData icon,
-    String? subtitle,
-    required VoidCallback onTap,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: colorScheme.primary,
-      ),
-      title: Text(
-        title,
-        style: TextStyle(color: colorScheme.onSurface),
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle,
-              style: TextStyle(color: colorScheme.onSurface.withOpacity(0.7)),
-            )
-          : null,
-      trailing: const Icon(Icons.chevron_right),
-      onTap: onTap,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-    );
-  }
 }

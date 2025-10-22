@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../auth/auth_screen.dart';
 
-
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -19,21 +18,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "image": "assets/images/onboarding-1.jpg",
       "title": "Welcome & Intro",
       "desc":
-      "Selamat datang di GoGem!\nTemukan cara baru menjelajah Indonesia dengan Smart Virtual Tour Guide yang interaktif dan personal.",
+          "Selamat datang di GoGem!\nTemukan cara baru menjelajah Indonesia dengan Smart Virtual Tour Guide yang interaktif dan personal.",
       "button": "Let's Go",
     },
     {
       "image": "assets/images/onboarding-2.jpg",
       "title": "Hidden Gems & Local Wonders",
       "desc":
-      "Jangan hanya ke destinasi populer.\nGoGem membawamu menemukan hidden gems, kuliner autentik, hingga produk lokal yang jarang terungkap wisatawan.",
+          "Jangan hanya ke destinasi populer.\nGoGem membawamu menemukan hidden gems, kuliner autentik, hingga produk lokal yang jarang terungkap wisatawan.",
       "button": "Continue",
     },
     {
       "image": "assets/images/onboarding-3.png",
       "title": "Smart Virtual AI Tour Guide",
       "desc":
-      "Jelajahi destinasi dengan lebih mudah bersama Smart Virtual AI dari GoGem yang siap membantu Anda kapan saja.",
+          "Jelajahi destinasi dengan lebih mudah bersama Smart Virtual AI dari GoGem yang siap membantu Anda kapan saja.",
       "button": "Let's Start",
     },
   ];
@@ -41,7 +40,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     final accentColor = theme.colorScheme.secondary;
     final onSurfaceColor = theme.colorScheme.onSurface;
@@ -95,7 +93,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           backgroundColor: accentColor,
                           foregroundColor: theme.colorScheme.onPrimary,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 14),
+                            horizontal: 40,
+                            vertical: 14,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
                           ),
@@ -104,7 +104,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           if (index == _pages.length - 1) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => const AuthScreen()),
+                              MaterialPageRoute(
+                                builder: (context) => const AuthScreen(),
+                              ),
                             );
                           } else {
                             _controller.nextPage(

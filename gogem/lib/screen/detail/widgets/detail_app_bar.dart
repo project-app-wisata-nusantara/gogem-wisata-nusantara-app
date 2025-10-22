@@ -44,7 +44,10 @@ class _DetailAppBarState extends State<DetailAppBar> {
           children: [
             // === Gambar utama ===
             widget.destination.linkGambar.startsWith('http')
-                ? Image.network(widget.destination.linkGambar, fit: BoxFit.cover)
+                ? Image.network(
+                    widget.destination.linkGambar,
+                    fit: BoxFit.cover,
+                  )
                 : Image.asset(widget.destination.linkGambar, fit: BoxFit.cover),
 
             // === Overlay gradient ===
@@ -68,11 +71,15 @@ class _DetailAppBarState extends State<DetailAppBar> {
               left: 0,
               right: 0,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
                 decoration: BoxDecoration(
                   color: GogemColors.white.withValues(alpha: 0.8),
-                  borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(20)),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: GogemColors.darkGrey.withValues(alpha: 0.2),
@@ -94,8 +101,11 @@ class _DetailAppBarState extends State<DetailAppBar> {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(Icons.location_on_outlined,
-                            color: GogemColors.accent, size: 18),
+                        const Icon(
+                          Icons.location_on_outlined,
+                          color: GogemColors.accent,
+                          size: 18,
+                        ),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
@@ -132,8 +142,9 @@ class _DetailAppBarState extends State<DetailAppBar> {
               child: GestureDetector(
                 onTap: () async {
                   await provider.toggleFavorite(widget.destination);
-                  final favStatus =
-                  await provider.isFavorite(widget.destination.id);
+                  final favStatus = await provider.isFavorite(
+                    widget.destination.id,
+                  );
                   if (mounted) setState(() => isFavorite = favStatus);
                 },
                 child: AnimatedContainer(
@@ -156,9 +167,7 @@ class _DetailAppBarState extends State<DetailAppBar> {
                     isFavorite
                         ? Icons.bookmark_rounded
                         : Icons.bookmark_border_rounded,
-                    color: isFavorite
-                        ? GogemColors.white
-                        : GogemColors.primary,
+                    color: isFavorite ? GogemColors.white : GogemColors.primary,
                     size: 24,
                   ),
                 ),
@@ -174,13 +183,16 @@ class _DetailAppBarState extends State<DetailAppBar> {
         child: CircleAvatar(
           backgroundColor: GogemColors.white.withValues(alpha: 0.95),
           child: IconButton(
-            icon: const Icon(Icons.home_rounded,
-                color: GogemColors.accent, size: 26),
+            icon: const Icon(
+              Icons.home_rounded,
+              color: GogemColors.accent,
+              size: 26,
+            ),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => const HomeScreen()),
-                    (route) => false,
+                (route) => false,
               );
             },
           ),
@@ -192,8 +204,11 @@ class _DetailAppBarState extends State<DetailAppBar> {
           child: CircleAvatar(
             backgroundColor: GogemColors.white.withValues(alpha: 0.95),
             child: IconButton(
-              icon: const Icon(Icons.account_circle_rounded,
-                  color: GogemColors.primary, size: 26),
+              icon: const Icon(
+                Icons.account_circle_rounded,
+                color: GogemColors.primary,
+                size: 26,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,

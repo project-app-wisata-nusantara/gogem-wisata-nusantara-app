@@ -93,11 +93,7 @@ class _SplashScreenState extends State<SplashScreen>
             children: [
               ScaleTransition(
                 scale: _scaleAnimation,
-                child: Image.asset(
-                  logoPath,
-                  height: 350,
-                  fit: BoxFit.contain,
-                ),
+                child: Image.asset(logoPath, height: 350, fit: BoxFit.contain),
               ),
 
               const SizedBox(height: 30),

@@ -27,8 +27,10 @@ class _PopulerPageState extends State<PopulerPage>
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
-    _fadeAnimation =
-        CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
 
     _loadDestinations();
   }
@@ -36,17 +38,20 @@ class _PopulerPageState extends State<PopulerPage>
   Future<void> _loadDestinations() async {
     try {
       await Future.delayed(const Duration(milliseconds: 700));
-      final jsonString =
-      await rootBundle.loadString('assets/data/dataset.json');
+      final jsonString = await rootBundle.loadString(
+        'assets/data/dataset.json',
+      );
       final List<dynamic> jsonData = json.decode(jsonString);
-      final destinations =
-      jsonData.map((e) => Destination.fromJson(e)).toList();
+      final destinations = jsonData
+          .map((e) => Destination.fromJson(e))
+          .toList();
 
       destinations.sort((a, b) => b.rating.compareTo(a.rating));
 
       setState(() {
-        _populerList =
-        destinations.length > 20 ? destinations.sublist(0, 20) : destinations;
+        _populerList = destinations.length > 20
+            ? destinations.sublist(0, 20)
+            : destinations;
         _isLoading = false;
       });
       _controller.forward();
@@ -139,17 +144,21 @@ class _PopulerPageState extends State<PopulerPage>
             child: _isLoading
                 ? _buildLoadingEffect()
                 : FadeTransition(
-              opacity: _fadeAnimation,
-              child: ListView.builder(
-                padding: const EdgeInsets.only(
-                    top: 8, left: 12, right: 12, bottom: 24),
-                itemCount: _populerList.length,
-                itemBuilder: (context, index) {
-                  final dest = _populerList[index];
-                  return DestinationCardLarge(destination: dest);
-                },
-              ),
-            ),
+                    opacity: _fadeAnimation,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(
+                        top: 8,
+                        left: 12,
+                        right: 12,
+                        bottom: 24,
+                      ),
+                      itemCount: _populerList.length,
+                      itemBuilder: (context, index) {
+                        final dest = _populerList[index];
+                        return DestinationCardLarge(destination: dest);
+                      },
+                    ),
+                  ),
           ),
         ],
       ),

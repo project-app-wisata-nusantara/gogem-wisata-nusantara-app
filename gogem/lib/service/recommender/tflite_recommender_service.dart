@@ -1,5 +1,5 @@
-import 'dart:typed_data';
-import 'package:flutter/services.dart';
+import 'dart:developer' as developer;
+
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 class TFLiteRecommenderService {
@@ -11,11 +11,13 @@ class TFLiteRecommenderService {
   /// Load model TFLite dari assets
   Future<void> loadModel() async {
     try {
-      _interpreter = await Interpreter.fromAsset('models/gogem_recommender.tflite');
+      _interpreter = await Interpreter.fromAsset(
+        'models/gogem_recommender.tflite',
+      );
       _isInitialized = true;
-      print('✅ Model gogem_recommender.tflite berhasil dimuat');
+      developer.log('✅ Model gogem_recommender.tflite berhasil dimuat');
     } catch (e) {
-      print('❌ Gagal memuat model: $e');
+      developer.log('❌ Gagal memuat model: $e');
     }
   }
 

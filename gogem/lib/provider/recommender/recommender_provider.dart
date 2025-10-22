@@ -21,7 +21,9 @@ class RecommenderProvider extends ChangeNotifier {
   }
 
   Future<void> _loadDataset() async {
-    final String jsonString = await rootBundle.loadString('assets/data/dataset.json');
+    final String jsonString = await rootBundle.loadString(
+      'assets/data/dataset.json',
+    );
     final List<dynamic> jsonData = json.decode(jsonString);
     _destinations = jsonData.map((e) => Destination.fromJson(e)).toList();
 
@@ -31,7 +33,7 @@ class RecommenderProvider extends ChangeNotifier {
         d.kategoriEnc.toDouble(),
         d.preferensiEnc.toDouble(),
         d.kabupatenEnc.toDouble(),
-        d.ratingNorm
+        d.ratingNorm,
       ];
       d.predictedScore = _tfliteService.predict(input);
     }
@@ -46,11 +48,14 @@ class RecommenderProvider extends ChangeNotifier {
 
   /// Ambil rekomendasi serupa berdasarkan kategori/preferensi
   List<Destination> getSimilarRecommendations(Destination current) {
-    final similar = _destinations.where((d) =>
-    d.kategori == current.kategori ||
-        d.preferensi == current.preferensi ||
-        d.kabupatenKota == current.kabupatenKota
-    ).toList();
+    final similar = _destinations
+        .where(
+          (d) =>
+              d.kategori == current.kategori ||
+              d.preferensi == current.preferensi ||
+              d.kabupatenKota == current.kabupatenKota,
+        )
+        .toList();
 
     similar.sort((a, b) => b.predictedScore.compareTo(a.predictedScore));
     return similar.take(8).toList();

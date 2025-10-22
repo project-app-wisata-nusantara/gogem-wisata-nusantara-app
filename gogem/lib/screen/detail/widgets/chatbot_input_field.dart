@@ -39,8 +39,10 @@ class ChatbotInputField extends StatelessWidget {
                   ),
                   fillColor: Colors.grey.shade100,
                   filled: true,
-                  contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
                 ),
                 onSubmitted: (_) => onSend(),
                 textInputAction: TextInputAction.send,
@@ -52,15 +54,17 @@ class ChatbotInputField extends StatelessWidget {
               backgroundColor: Colors.orange,
               child: isLoading
                   ? const SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(
-                    strokeWidth: 2, color: Colors.white),
-              )
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
                   : IconButton(
-                icon: const Icon(Icons.send, color: Colors.white),
-                onPressed: onSend,
-              ),
+                      icon: const Icon(Icons.send, color: Colors.white),
+                      onPressed: onSend,
+                    ),
             ),
           ],
         ),

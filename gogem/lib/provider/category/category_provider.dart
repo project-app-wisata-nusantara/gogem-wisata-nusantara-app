@@ -12,15 +12,20 @@ class CategoryProvider with ChangeNotifier {
 
   Future<void> loadCategories() async {
     try {
-      final String jsonString = await rootBundle.loadString('assets/data/dataset.json');
+      final String jsonString = await rootBundle.loadString(
+        'assets/data/dataset.json',
+      );
       final List<dynamic> jsonData = json.decode(jsonString);
 
       // Ubah JSON ke List<Destination>
-      final List<Destination> destinations =
-      jsonData.map((e) => Destination.fromJson(e)).toList();
+      final List<Destination> destinations = jsonData
+          .map((e) => Destination.fromJson(e))
+          .toList();
 
       // Ambil kategori unik dari list destinasi
-      final Set<String> uniqueCategories = destinations.map((d) => d.kategori).toSet();
+      final Set<String> uniqueCategories = destinations
+          .map((d) => d.kategori)
+          .toSet();
 
       _categories = uniqueCategories.toList()..sort();
     } catch (e) {

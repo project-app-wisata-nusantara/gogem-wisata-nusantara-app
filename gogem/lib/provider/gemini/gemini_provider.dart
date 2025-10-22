@@ -30,7 +30,9 @@ class GeminiProvider with ChangeNotifier {
         location: location,
         category: category,
       );
-      print('✅ Summary generated successfully: ${_generatedSummary?.substring(0, 50)}...');
+      print(
+        '✅ Summary generated successfully: ${_generatedSummary?.substring(0, 50)}...',
+      );
       _isGenerating = false;
       notifyListeners();
     } catch (e) {

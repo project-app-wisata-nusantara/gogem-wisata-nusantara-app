@@ -53,10 +53,18 @@ class _DestinationCardState extends State<DestinationCard> {
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             child: dest.linkGambar.startsWith('http')
-                ? Image.network(dest.linkGambar,
-                height: 110, width: double.infinity, fit: BoxFit.cover)
-                : Image.asset(dest.linkGambar,
-                height: 110, width: double.infinity, fit: BoxFit.cover),
+                ? Image.network(
+                    dest.linkGambar,
+                    height: 110,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    dest.linkGambar,
+                    height: 110,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -81,8 +89,7 @@ class _DestinationCardState extends State<DestinationCard> {
                     GestureDetector(
                       onTap: () async {
                         await provider.toggleFavorite(dest);
-                        final favStatus =
-                        await provider.isFavorite(dest.id);
+                        final favStatus = await provider.isFavorite(dest.id);
                         if (mounted) setState(() => isFavorite = favStatus);
                       },
                       child: AnimatedContainer(
@@ -118,8 +125,10 @@ class _DestinationCardState extends State<DestinationCard> {
                 ),
                 const SizedBox(height: 6),
                 Container(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.orange[600],
                     borderRadius: BorderRadius.circular(8),
@@ -127,8 +136,11 @@ class _DestinationCardState extends State<DestinationCard> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.star_rounded,
-                          color: Colors.white, size: 14),
+                      const Icon(
+                        Icons.star_rounded,
+                        color: Colors.white,
+                        size: 14,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         dest.rating.toStringAsFixed(1),

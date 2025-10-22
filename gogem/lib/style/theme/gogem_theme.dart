@@ -69,10 +69,4 @@ class GogemTheme {
       labelSmall: GogemTextStyles.labelSmall,
     );
   }
-
-
-
-
-
-
 }

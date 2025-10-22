@@ -12,7 +12,8 @@ class HomeCarousel extends StatelessWidget {
     {
       'image': 'assets/images/slider_2.png',
       'title': 'Kamu Akan Menyesal!',
-      'subtitle': 'Menyesal karena tidak pernah menjelajahi keajaiban Indonesia 🌋',
+      'subtitle':
+          'Menyesal karena tidak pernah menjelajahi keajaiban Indonesia 🌋',
     },
     {
       'image': 'assets/images/slider_3.png',
@@ -22,7 +23,8 @@ class HomeCarousel extends StatelessWidget {
     {
       'image': 'assets/images/slider_4.png',
       'title': 'Jelajahi Indonesia',
-      'subtitle': 'Rasakan pengalaman tak terlupakan di hutan dan pantai Indonesia 🌊',
+      'subtitle':
+          'Rasakan pengalaman tak terlupakan di hutan dan pantai Indonesia 🌊',
     },
   ];
 
@@ -66,10 +68,7 @@ class HomeCarousel extends StatelessWidget {
                     fit: StackFit.expand,
                     children: [
                       // === Background Image ===
-                      Image.asset(
-                        banner['image']!,
-                        fit: BoxFit.cover,
-                      ),
+                      Image.asset(banner['image']!, fit: BoxFit.cover),
 
                       // === Gradient Overlay ===
                       Container(
@@ -78,7 +77,9 @@ class HomeCarousel extends StatelessWidget {
                             colors: [
                               GogemColors.primary.withValues(alpha: 0.55),
                               Colors.transparent,
-                              GogemColors.backgroundDark.withValues(alpha: 0.45),
+                              GogemColors.backgroundDark.withValues(
+                                alpha: 0.45,
+                              ),
                             ],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
@@ -117,7 +118,9 @@ class HomeCarousel extends StatelessWidget {
                               Text(
                                 banner['subtitle']!,
                                 style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: GogemColors.white.withValues(alpha: 0.9),
+                                  color: GogemColors.white.withValues(
+                                    alpha: 0.9,
+                                  ),
                                   fontWeight: FontWeight.w200,
                                 ),
                               ),

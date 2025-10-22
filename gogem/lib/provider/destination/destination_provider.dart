@@ -12,7 +12,9 @@ class DestinationProvider with ChangeNotifier {
 
   Future<void> loadDestinations() async {
     try {
-      final String jsonString = await rootBundle.loadString('assets/data/dataset.json');
+      final String jsonString = await rootBundle.loadString(
+        'assets/data/dataset.json',
+      );
       final List<dynamic> jsonData = json.decode(jsonString);
       _destinations = jsonData.map((e) => Destination.fromJson(e)).toList();
     } catch (e) {

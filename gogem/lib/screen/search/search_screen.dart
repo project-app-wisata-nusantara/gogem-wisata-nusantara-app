@@ -1,12 +1,9 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gogem/data/model/destination_model.dart';
 import 'package:gogem/screen/card/destination_card_large.dart';
-import 'package:gogem/screen/detail/detail_screen.dart';
 import '../../provider/destination/destination_provider.dart';
 import '../../style/theme/gogem_theme.dart';
 import 'package:provider/provider.dart';
-
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -63,10 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        Color(0xFF8E24AA),
-                        Color(0xFFBA68C8),
-                      ],
+                      colors: [Color(0xFF8E24AA), Color(0xFFBA68C8)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -115,12 +109,16 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: _controller,
               decoration: InputDecoration(
                 hintText: 'Ketik nama destinasi...',
-                prefixIcon: const Icon(Icons.search_rounded,
-                    color: GogemColors.darkGrey),
+                prefixIcon: const Icon(
+                  Icons.search_rounded,
+                  color: GogemColors.darkGrey,
+                ),
                 filled: true,
                 fillColor: Colors.white,
-                contentPadding:
-                const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
                   borderSide: BorderSide.none,
@@ -134,34 +132,38 @@ class _SearchScreenState extends State<SearchScreen> {
           Expanded(
             child: provider.isLoading
                 ? const Center(
-              child: CircularProgressIndicator(color: GogemColors.primary),
-            )
+                    child: CircularProgressIndicator(
+                      color: GogemColors.primary,
+                    ),
+                  )
                 : _searchResults.isEmpty && _controller.text.isEmpty
                 ? Center(
-              child: Text(
-                "Ketik kata kunci untuk mencari destinasi...",
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: GogemColors.darkGrey.withValues(alpha: 0.8)),
-                textAlign: TextAlign.center,
-              ),
-            )
+                    child: Text(
+                      "Ketik kata kunci untuk mencari destinasi...",
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: GogemColors.darkGrey.withValues(alpha: 0.8),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
                 : _searchResults.isEmpty
                 ? Center(
-              child: Text(
-                "Destinasi tidak ditemukan 😢",
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: GogemColors.darkGrey.withValues(alpha: 0.8)),
-                textAlign: TextAlign.center,
-              ),
-            )
+                    child: Text(
+                      "Destinasi tidak ditemukan 😢",
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: GogemColors.darkGrey.withValues(alpha: 0.8),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
                 : ListView.builder(
-              padding: const EdgeInsets.only(bottom: 24),
-              itemCount: _searchResults.length,
-              itemBuilder: (context, index) {
-                final dest = _searchResults[index];
-                return DestinationCardLarge(destination: dest);
-              },
-            ),
+                    padding: const EdgeInsets.only(bottom: 24),
+                    itemCount: _searchResults.length,
+                    itemBuilder: (context, index) {
+                      final dest = _searchResults[index];
+                      return DestinationCardLarge(destination: dest);
+                    },
+                  ),
           ),
         ],
       ),

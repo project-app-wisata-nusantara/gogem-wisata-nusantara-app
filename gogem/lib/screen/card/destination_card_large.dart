@@ -61,27 +61,29 @@ class _DestinationCardLargeState extends State<DestinationCardLarge> {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(18)),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(18),
+                  ),
                   child: widget.destination.linkGambar.startsWith('http')
                       ? Image.network(
-                    widget.destination.linkGambar,
-                    height: 150,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  )
+                          widget.destination.linkGambar,
+                          height: 150,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        )
                       : Image.asset(
-                    widget.destination.linkGambar,
-                    height: 150,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+                          widget.destination.linkGambar,
+                          height: 150,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 Container(
                   height: 150,
                   decoration: BoxDecoration(
-                    borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(18)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(18),
+                    ),
                     gradient: LinearGradient(
                       colors: [
                         Colors.black.withValues(alpha: 0.3),
@@ -97,7 +99,9 @@ class _DestinationCardLargeState extends State<DestinationCardLarge> {
 
             // ==== DETAIL & FAVORITE BUTTON ====
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14).copyWith(top: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+              ).copyWith(top: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -124,7 +128,10 @@ class _DestinationCardLargeState extends State<DestinationCardLarge> {
                         ),
                         const SizedBox(height: 6),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.orange[600],
                             borderRadius: BorderRadius.circular(8),
@@ -132,7 +139,11 @@ class _DestinationCardLargeState extends State<DestinationCardLarge> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.star, color: Colors.white, size: 14),
+                              const Icon(
+                                Icons.star,
+                                color: Colors.white,
+                                size: 14,
+                              ),
                               const SizedBox(width: 4),
                               Text(
                                 widget.destination.rating.toStringAsFixed(1),
@@ -153,7 +164,9 @@ class _DestinationCardLargeState extends State<DestinationCardLarge> {
                   GestureDetector(
                     onTap: () async {
                       await provider.toggleFavorite(widget.destination);
-                      final favStatus = await provider.isFavorite(widget.destination.id);
+                      final favStatus = await provider.isFavorite(
+                        widget.destination.id,
+                      );
                       if (mounted) setState(() => isFavorite = favStatus);
                     },
                     child: AnimatedContainer(
@@ -161,7 +174,9 @@ class _DestinationCardLargeState extends State<DestinationCardLarge> {
                       margin: const EdgeInsets.only(top: 6),
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        color: isFavorite ? GogemColors.primary : GogemColors.white,
+                        color: isFavorite
+                            ? GogemColors.primary
+                            : GogemColors.white,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
@@ -172,8 +187,12 @@ class _DestinationCardLargeState extends State<DestinationCardLarge> {
                         ],
                       ),
                       child: Icon(
-                        isFavorite ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
-                        color: isFavorite ? GogemColors.white : GogemColors.primary,
+                        isFavorite
+                            ? Icons.bookmark_rounded
+                            : Icons.bookmark_border_rounded,
+                        color: isFavorite
+                            ? GogemColors.white
+                            : GogemColors.primary,
                         size: 20,
                       ),
                     ),

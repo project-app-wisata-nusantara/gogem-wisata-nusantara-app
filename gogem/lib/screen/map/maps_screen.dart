@@ -74,17 +74,17 @@ class _MapsScreenState extends State<MapsScreen> {
                   borderRadius: BorderRadius.circular(16),
                   child: dest.linkGambar.startsWith('http')
                       ? Image.network(
-                    dest.linkGambar,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  )
+                          dest.linkGambar,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        )
                       : Image.asset(
-                    dest.linkGambar,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+                          dest.linkGambar,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -104,7 +104,10 @@ class _MapsScreenState extends State<MapsScreen> {
                 children: [
                   const Icon(Icons.star, color: Colors.amber, size: 20),
                   const SizedBox(width: 4),
-                  Text("${dest.rating}", style: const TextStyle(fontWeight: FontWeight.w600)),
+                  Text(
+                    "${dest.rating}",
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -145,8 +148,9 @@ class _MapsScreenState extends State<MapsScreen> {
             initialCameraPosition: _initialCameraPosition,
             markers: mapProvider.markers.map((marker) {
               final dest = mapProvider.destinations.firstWhere(
-                      (d) => d.nama == marker.markerId.value,
-                  orElse: () => Destination.empty());
+                (d) => d.nama == marker.markerId.value,
+                orElse: () => Destination.empty(),
+              );
               return marker.copyWith(
                 onTapParam: () => _showDetailDestination(dest),
               );
@@ -179,10 +183,11 @@ class _MapsScreenState extends State<MapsScreen> {
                     Center(
                       child: Text(
                         "Peta Destinasi",
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: GogemColors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall
+                            ?.copyWith(
+                              color: GogemColors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                     // ==== BUTTON DI KANAN ATAS ====
@@ -202,7 +207,6 @@ class _MapsScreenState extends State<MapsScreen> {
               ),
             ),
           ),
-
         ],
       ),
     );
@@ -215,7 +219,12 @@ class HeaderWaveClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 40);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 40);
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.height,
+      size.width,
+      size.height - 40,
+    );
     path.lineTo(size.width, 0);
     path.close();
     return path;

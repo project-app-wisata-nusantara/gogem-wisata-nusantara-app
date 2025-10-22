@@ -20,7 +20,10 @@ class AuthScreen extends StatelessWidget {
             children: [
               // ===== MODERN TAB HEADER =====
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: isDark ? colorScheme.surface : Colors.white,
                   borderRadius: BorderRadius.circular(16),
@@ -35,10 +38,7 @@ class AuthScreen extends StatelessWidget {
                 child: TabBar(
                   indicator: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        GogemColors.primary,
-                        GogemColors.secondary,
-                      ],
+                      colors: [GogemColors.primary, GogemColors.secondary],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -52,8 +52,9 @@ class AuthScreen extends StatelessWidget {
                     ],
                   ),
                   labelColor: Colors.white,
-                  unselectedLabelColor:
-                  isDark ? Colors.grey[400] : GogemColors.primary,
+                  unselectedLabelColor: isDark
+                      ? Colors.grey[400]
+                      : GogemColors.primary,
                   labelStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -81,22 +82,13 @@ class AuthScreen extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: isDark
-                          ? [
-                        GogemColors.backgroundDark,
-                        GogemColors.darkGrey,
-                      ]
-                          : [
-                        GogemColors.backgroundLight,
-                        Colors.white,
-                      ],
+                          ? [GogemColors.backgroundDark, GogemColors.darkGrey]
+                          : [GogemColors.backgroundLight, Colors.white],
                     ),
                   ),
                   child: const TabBarView(
                     physics: BouncingScrollPhysics(),
-                    children: [
-                      SignInForm(),
-                      SignUpForm(),
-                    ],
+                    children: [SignInForm(), SignUpForm()],
                   ),
                 ),
               ),
