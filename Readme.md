@@ -1,5 +1,5 @@
 # GoGem
-![download](https://github.com/project-app-wisata-nusantara/gogem-wisata-nusantara-app/blob/main/Assets/cover_gogem.jpg)
+https://github.com/project-app-wisata-nusantara/gogem-wisata-nusantara-app/blob/main/Assets/cover_gogem.jpg
 ## Capstone Project BEKUP CREATE 2025
 
 BEKUP CREATE Capstone Group ID : : B25-PG005	<br>
@@ -61,6 +61,7 @@ Tourism Place : [link](https://www.kaggle.com/datasets/bertnardomariouskono/bali
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
 
 
 
