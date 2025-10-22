@@ -31,7 +31,7 @@ Youtube Video Presentation : [Link]()
 
 ## System Architecture
 ### Flutter Clean Architecture
-![SystemArchitecture](https://github.com/project-app-wisata-nusantara/gogem-wisata-nusantara-app/blob/main/Assets/flutter_clean_architecture.png)
+![SystemArchitecture](https://github.com/project-app-wisata-nusantara/gogem-wisata-nusantara-app/blob/main/Assets-1/flutter_clean_architecture.png)
 
 ## Repositories
 
@@ -61,6 +61,7 @@ Tourism Place : [link](https://www.kaggle.com/datasets/bertnardomariouskono/bali
 ## Deployment Link APK 
 
 Download Link APK  :<br>[]()
+
 
 
 
